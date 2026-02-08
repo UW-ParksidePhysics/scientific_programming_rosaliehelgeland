@@ -1,1 +1,37 @@
+(venv) root@deepnote:~/work # pwd
+/root/work
+(venv) root@deepnote:~/work # ls -la
+total 8
+drwxrwxrwx. 1 root users 4096 Jan  1  1970 .
+drwxrwsrwx. 3 root users   28 Feb  8 18:19 ..
+drwxr-xr-x. 1 root users 4096 Feb  3 14:41 scientific_programming_rosaliehelgeland
+(venv) root@deepnote:~/work # cd scientific_programming_rosaliehelgeland/
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # pwd
+/root/work/scientific_programming_rosaliehelgeland
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # ls -la
+total 21
+drwxr-xr-x. 1 root users 4096 Feb  3 14:41 .
+drwxrwxrwx. 1 root users 4096 Jan  1  1970 ..
+drwxr-xr-x. 1 root users 4096 Feb  3 14:53 command-line
+drwxr-xr-x. 1 root users 4096 Feb  3 14:42 .git
+drwxr-xr-x. 1 root users 4096 Feb  3 14:55 python
+-rw-r--r--. 1 root users  119 Feb  3 14:53 README.md
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # cd ~
+(venv) root@deepnote:~ # pwd
+/root
+(venv) root@deepnote:~ # cd /root/work
+(venv) root@deepnote:~/work # cd scientific_programming_rosaliehelgeland/
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # pdw
+bash: pdw: command not found
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # pwd
+/root/work/scientific_programming_rosaliehelgeland
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # ls -ln
+total 9
+drwxr-xr-x. 1 0 100 4096 Feb  3 14:53 command-line
+drwxr-xr-x. 1 0 100 4096 Feb  3 14:55 python
+-rw-r--r--. 1 0 100  119 Feb  3 14:53 README.md
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # cd ..
+(venv) root@deepnote:~/work # cd ..
+(venv) root@deepnote:~ # pwd
+/root
 
