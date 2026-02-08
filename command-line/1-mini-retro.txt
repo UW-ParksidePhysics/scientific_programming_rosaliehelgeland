@@ -1,17 +1,17 @@
-Partner:
+Partner: Nathan
 
 What Went Well
----
+It wasn't as difficult as I thought that it would be! 
 
 
 What Would Make Next Time 1% Better
----
-* Focus:
+I think my focus could be improved
+* Focus: 6/10
 
-* Communication:
+* Communication: 6/10
 
-* Pacing:
+* Pacing: 5/10, it was a little fast! I struggled to listen and type at the same time.. I made a typo and got confused so I redid the assignment a different day.
 
-* Division of responsibility
+* Division of responsibility 10/10
 
-* Code quality:
+* Code quality: 8/10
