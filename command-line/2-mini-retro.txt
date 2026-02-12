@@ -1,17 +1,18 @@
-Partner:
+Partner: Nathan
 
-What Went Well
----
+What Went Well: 
+Finished it for the most part and have good health and cheery personalalitys. Our classmates are friendly!
 
 
 What Would Make Next Time 1% Better
----
+The deepnote terminal not being so slow. 
 * Focus:
-
+10/10
 * Communication:
-
+9.5/10
 * Pacing:
-
+4/10
 * Division of responsibility
-
+10/10
 * Code quality:
+We think our code quality was alright. Not too shabby. 
