@@ -1,1 +1,11 @@
+Last login: Thu Feb 12 08:53:39 on ttys003
 
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+D134619958:~ jones051$ touch shopping_list.txt
+D134619958:~ jones051$ vi shopping_list.txt
+D134619958:~ jones051$ cat shopping_list.txt
+Apples, bread, milk, coffe, lots of vodka
+D134619958:~ jones051$ 
+D134619958:~ jones051$ 
