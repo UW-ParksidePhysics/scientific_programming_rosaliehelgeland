@@ -1,7 +1,4 @@
-D134619958:~ jones051$ touch example.txt
-D134619958:~ jones051$ vi example.txt
-D134619958:~ jones051$  cat example.txt
-This is my first file created in the terminal 
+
 D134619958:~ jones051$ 
 D134619958:~ jones051$ touch example.txt
 D134619958:~ jones051$ vi example.txt
