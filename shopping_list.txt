@@ -1,0 +1,5 @@
+D134619958:~ jones051$ touch shopping_list.txt
+D134619958:~ jones051$ vi shopping_list.txt
+D134619958:~ jones051$ cat shopping_list.txt
+Apples, bread, milk, coffee, lots of vodka
+D134619958:~ jones051$ 
