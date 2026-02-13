@@ -2,4 +2,4 @@
 * Variables
 * Comments
 * Data types
-* Function(?)
+* Functions(?)
