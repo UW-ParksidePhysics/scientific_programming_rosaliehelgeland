@@ -1,1 +1,18 @@
-
+(venv) root@deepnote:~/work # ls
+'File_Create&Edit'   Scientific_Programming_Austin_Jakes
+(venv) root@deepnote:~/work # cd Scientific_Programming_Austin_Jakes/
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes # ls 
+command-line  python  README.md
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes # cd command-line/
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # cp 3-files.txt backup_files.txt
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # mv backup_files.txt renamed_files.txt
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # rm renamed_files.txt
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # mkdir practice_directory
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # ls
+10-CONCEPTS.md      2-editing.txt     4-directories.txt  6-mini-retro.txt  8-mini-retro.txt
+10-mini-retro.txt   2-mini-retro.txt  4-mini-retro.txt   6-searching.txt   8-redirection.txt
+1-CONCEPTS.md       3-CONCEPTS.md     5-CONCEPTS.md      7-CONCEPTS.md     9-CONCEPTS.md
+1-introduction.txt  3-files.txt       5-mini-retro.txt   7-mini-retro.txt  9-mini-retro.txt
+1-mini-retro.txt    3-mini-retro.txt  5-permissions.txt  7-processes.txt   9-vi.txt
+2-CONCEPTS.md       4-CONCEPTS.md     6-CONCEPTS.md      8-CONCEPTS.md     practice_directory
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # touch shopping_li
