@@ -1,17 +1,19 @@
-Partner:
+Partner: Nolan
 
 What Went Well
 ---
-
+Worked fast, effieciently. 
 
 What Would Make Next Time 1% Better
 ---
-* Focus:
+No typos.
 
-* Communication:
+* Focus: Good
 
-* Pacing:
+* Communication: Good
 
-* Division of responsibility
+* Pacing: Good
 
-* Code quality:
+* Division of responsibility: Good
+
+* Code quality: Passable

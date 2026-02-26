@@ -1,17 +1,18 @@
-Partner:
+Partner: Austin
 
 What Went Well
----
+Less issues with deepnote terminal this time! Finished everything quickly. 
 
 
 What Would Make Next Time 1% Better
----
+terminal functionality probably
 * Focus:
-
+10/10
 * Communication:
-
+10/10
 * Pacing:
-
+10/10
 * Division of responsibility
-
+10/10
 * Code quality:
+i think good but i'm probably not the best judge 

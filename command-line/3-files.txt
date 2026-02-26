@@ -15,4 +15,16 @@ command-line  python  README.md
 1-introduction.txt  3-files.txt       5-mini-retro.txt   7-mini-retro.txt  9-mini-retro.txt
 1-mini-retro.txt    3-mini-retro.txt  5-permissions.txt  7-processes.txt   9-vi.txt
 2-CONCEPTS.md       4-CONCEPTS.md     6-CONCEPTS.md      8-CONCEPTS.md     practice_directory
-(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # touch shopping_li
+(venv) root@deepnote:~/work/Scientific_Programming_Austin_Jakes/command-line # touch shopping_list
+(venv) root@deepnote:~/work # mkdir practice_directory
+(venv) root@deepnote:~/work # touch shopping_list.txt
+(venv) root@deepnote:~/work # mv shopping_lists.txt
+mv: missing destination file operand after 'shopping_lists.txt'
+Try 'mv --help' for more information.
+(venv) root@deepnote:~/work # mv shopping_list.txt practice_directory/
+(venv) root@deepnote:~/work # ls
+'File_Create&Edit'   practice_directory   Scientific_Programming_Austin_Jakes
+(venv) root@deepnote:~/work # ls -R practice_directory
+practice_directory:
+shopping_list.txt
+(venv) root@deepnote:~/work # rm -r practice_directory

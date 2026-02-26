@@ -1,1 +1,42 @@
-
+(venv) root@deepnote:~/work # cd scientific_programming_nolanbahr/
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # mkdir lesson4-practice
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # mkdir -p lesson4-practice/date/2026
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # cd documents
+bash: cd: documents: No such file or directory
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # cd home
+bash: cd: home: No such file or directory
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # cd ~
+(venv) root@deepnote:~ # pwd
+/root
+(venv) root@deepnote:~ # cd -
+/root/work/scientific_programming_nolanbahr
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # find lesson4-practice -type d
+lesson4-practice
+lesson4-practice/date
+lesson4-practice/date/2026
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # rmdir lesson4-practice/data/2026
+rmdir: failed to remove 'lesson4-practice/data/2026': No such file or directory
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # rmdir lesson4-practice/date/2026
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # mkdir -p projects/frontend projects/backend/frontend/database
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # rm - r
+rm: cannot remove '-': No such file or directory
+rm: cannot remove 'r': No such file or directory
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # rm -r projects/
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # ls
+command-line  lesson4-practice  python  README.md
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # rm -r lesson4-practice/
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # mkdir -p projects/frontend projects/backend projects/database
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # find lesson4-practice -type d
+find: ‘lesson4-practice’: No such file or directory
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # mkdir projects
+mkdir: cannot create directory ‘projects’: File exists
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # find projects -type d
+projects
+projects/backend
+projects/database
+projects/frontend
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # rm -r projects
+ls
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # ls
+command-line  python  README.md
+(venv) root@deepnote:~/work/scientific_programming_nolanbahr # 
