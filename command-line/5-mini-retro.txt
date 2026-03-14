@@ -1,17 +1,18 @@
-Partner:
+Partner: Prem
 
 What Went Well
----
+we terminal was working well 
 
 
 What Would Make Next Time 1% Better
----
+increased communication 
 * Focus:
-
+7/10
 * Communication:
-
+3/10
 * Pacing:
-
+3/10
 * Division of responsibility
-
+6/10
 * Code quality:
+7/10
