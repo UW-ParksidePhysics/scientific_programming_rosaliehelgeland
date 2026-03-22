@@ -1,10 +1,21 @@
+import sys
 
+try:
+    fahrenheit = float(sys.argv[1])
+except IndexError:
+    print (f'Fahrenheit degrees needed on command line!')
+    sys.exit(1)
 
+    
 def convert_fahrenheit_to_celsius(fahrenheit_temperature):
+
     celsius_temperature = (5./9)*(fahrenheit_temperature-32)
+
+    return celsius_temperature
 
 
 if __name__ == '__main__':
-    print('run as program:')
-    print(float(convert_fahrenheit_to_celsius(sys.argv[1])))
+    print (f'run as program:')
+    fahrenheit = float(sys.argv[1])
+    print (f'{sys.argv[1]} degrees fahrenheit converts to {convert_fahrenheit_to_celsius(fahrenheit)} degrees celsius')
 

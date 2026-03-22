@@ -1,5 +1,5 @@
-
 def convert_fahrenheit_to_celsius(fahrenheit_temperature):
+
     celsius_temperature = (5./9)*(fahrenheit_temperature-32)
 
     return celsius_temperature
