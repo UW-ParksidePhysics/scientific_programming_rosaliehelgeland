@@ -1,5 +1,7 @@
-def extract_and_convert_fahrenheit(filename):
-    infile = open(filename, 'r')
+from io import StringIO
+
+
+def extract_and_convert_fahrenheit(infile):
 
     fahrenheit_temps = []
     
@@ -24,11 +26,27 @@ def extract_and_convert_fahrenheit(filename):
         
     return fahrenheit_temps, celsius_temps
     
-    infile.close()
 
-fahrenheit, celsius = extract_and_convert_fahrenheit("/work/scientific_programming_rosaliehelgeland/python/user_input/Temperature data.2.txt")
 
-print (f"Fahrenheit" "Celsius")
+temperature_data = StringIO(""" Temperature data
+ ----------------
+ Fahrenheit degrees: 67.2
+ Fahrenheit degrees: 66.0
+ Fahrenheit degrees: 78.9
+ Fahrenheit degrees: 102.1
+ Fahrenheit degrees: 32.0
+ Fahrenheit degrees: 87.8""")
+
+
+fahrenheit, celsius = extract_and_convert_fahrenheit(temperature_data)
+
+print ('-'*21)
+
+print (f'{"Fahrenheit"} {"Celsius":>9}')
+
+print (f'{"----------"} {"-------":>9}')
 
 for f, c in zip(fahrenheit, celsius):
-    print(f, c)
+    print(f'{f:>7.4} {c:>10.3}')
+
+print ('-'*21)
