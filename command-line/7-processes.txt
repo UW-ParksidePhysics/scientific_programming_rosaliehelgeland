@@ -1,1 +1,134 @@
+(venv) root@deepnote:~/work # ps
+    PID TTY          TIME CMD
+    999 pts/0    00:00:00 bash
+   1003 pts/0    00:00:00 ps
+(venv) root@deepnote:~/work # ps
+    PID TTY          TIME CMD
+    999 pts/0    00:00:00 bash
+   1016 pts/0    00:00:00 ps
+(venv) root@deepnote:~/work # ps -e
+    PID TTY          TIME CMD
+      1 ?        00:00:00 python
+     15 ?        00:00:00 sh
+     19 ?        00:00:09 python
+     21 ?        00:00:00 sh
+     24 ?        00:00:00 sh
+     25 ?        00:00:03 python
+     28 ?        00:00:00 python
+     29 ?        00:00:00 sh
+     32 ?        00:00:00 python
+    116 ?        00:00:00 find
+    653 pts/1    00:00:00 bash
+    986 pts/3    00:00:00 bash
+    999 pts/0    00:00:00 bash
+   1055 pts/3    00:00:00 vi
+   1069 pts/0    00:00:00 ps
+(venv) root@deepnote:~/work # kill [1055]
+bash: kill: [1055]: arguments must be process or job IDs
+(venv) root@deepnote:~/work # kill 1055
+(venv) root@deepnote:~/work # sleep 100 &
+[1] 1098
+(venv) root@deepnote:~/work # jobs
+[1]+  Running                 sleep 100 &
+(venv) root@deepnote:~/work # fg
+sleep 100
+ 
+(venv) root@deepnote:~/work # 
+(venv) root@deepnote:~/work # ping google.com &
+[1] 1148
+(venv) root@deepnote:~/work # bash: ping: command not found
+ps
+    PID TTY          TIME CMD
+    999 pts/0    00:00:00 bash
+   1187 pts/0    00:00:00 ps
+[1]+  Exit 127                ping google.com
+(venv) root@deepnote:~/work # ping google.com
+bash: ping: command not found
+(venv) root@deepnote:~/work # sudo apt update
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8,792 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6,924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [294 kB]
+Fetched 9,347 kB in 6s (1,525 kB/s)            
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+19 packages can be upgraded. Run 'apt list --upgradable' to see them.
+(venv) root@deepnote:~/work # sudo apt install iputils-ping -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 19 not upgraded.
+Need to get 97.4 kB of archives.
+After this operation, 314 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libcap2-bin amd64 1:2.66-4+deb12u2+b2 [35.2 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 iputils-ping amd64 3:20221126-1+deb12u1 [47.2 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libpam-cap amd64 1:2.66-4+deb12u2+b2 [15.0 kB]
+Fetched 97.4 kB in 0s (2,163 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 37731 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.66-4+deb12u2+b2_amd64.deb ...
+Unpacking libcap2-bin (1:2.66-4+deb12u2+b2) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20221126-1+deb12u1_amd64.deb ...
+Unpacking iputils-ping (3:20221126-1+deb12u1) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.66-4+deb12u2+b2_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.66-4+deb12u2+b2) ...
+Setting up libcap2-bin (1:2.66-4+deb12u2+b2) ...
+Setting up libpam-cap:amd64 (1:2.66-4+deb12u2+b2) ...
+top - 22:51:34 up 58 days,  7:28,  0 user,  load
+Tasks:  16 total,   1 running,  12 sleeping,   0
+%Cpu(s): 15.6 us,  2.6 sy,  0.0 ni, 81.7 id,  0.
+MiB Mem :  64202.0 total,  12395.1 free,  20318.
+MiB Swap:      0.0 total,      0.0 free,      0.
 
+    PID USER      PR  NI    VIRT    RES    SHR 
+     19 root      20   0  140708  56452  16240 
+      1 root      20   0  637248  37924  14600 
+     15 root      20   0    2592   1640   1516 
+     21 root      20   0    2592   1664   1540 
+     24 root      20   0    2592   1704   1580 
+     25 root      20   0 2724044 613316 312208 
+     28 root      20   0  179712  24232  10976 
+     29 root      20   0    2592   1800   1676 
+     32 root      20   0  104888  23072  10288 
+    116 root      20   0       0      0      0 
+    653 root      20   0    7212   4072   3492 
+    986 root      20   0    7212   3980   3396 
+    999 root      20   0    7728   4524   3404 
+   1204 root      20   0       0      0      0 
+   1329 root      20   0       0      0      0 
+   1429 root      20   0   11628   5604   3480 
+top - 22:55:18 up 58 days,  7:32,  0 user,  load
+Tasks:  18 total,   1 running,  13 sleeping,   1
+%Cpu(s): 10.0 us,  3.4 sy,  0.0 ni, 86.6 id,  0.
+MiB Mem :  64202.0 total,  11548.6 free,  21173.
+MiB Swap:      0.0 total,      0.0 free,      0.
+
+    PID USER      PR  NI    VIRT    RES    SHR 
+     19 root      20   0  140708  56532  16240 
+      1 root      20   0  637248  37924  14600 
+     15 root      20   0    2592   1640   1516 
+     21 root      20   0    2592   1664   1540 
+     24 root      20   0    2592   1704   1580 
+     25 root      20   0 2724044 613316 312208 
+     28 root      20   0  179712  24232  10976 
+     29 root      20   0    2592   1800   1676 
+     32 root      20   0  104888  23076  10288 
+    116 root      20   0       0      0      0 
+    653 root      20   0    7212   4072   3492 
+    986 root      20   0    7212   3980   3396 
+    999 root      20   0    7728   4524   3404 
+   1204 root      20   0       0      0      0 
+   1329 root      20   0       0      0      0 
+   1440 root      20   0   11628   5444   3320 
+   1460 root      20   0   17600  12108   6172 
+   1481 root      20   0   11628   5456   3332 

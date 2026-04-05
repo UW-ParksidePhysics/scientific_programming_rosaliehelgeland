@@ -1,1 +1,309 @@
-
+(venv) root@deepnote:~/work # cd scientific_programming_rosaliehelgeland/
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # find . -name "ball.py"
+./ball.py
+./python/3d_visualization/ball.py
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland # cd python/3d_visualization/
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland/python/3d_visualization # ls
+ball.py              birthday_vector.py  projectile_motion_comparison.py  two_balls_cross.py
+birthday_station.py  CONCEPTS.md         two_balls_bounce.py
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland/python/3d_visualization # grep "vpython" ball.py
+(venv) root@deepnote:~/work/scientific_programming_rosaliehelgeland/python/3d_visualization # cd /work/scientific_programming_rosaliehelgeland/
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland # find . -mtime -3
+./.git/COMMIT_EDITMSG
+./.git/HEAD
+./.git/config
+./.git/description
+./.git/hooks/applypatch-msg.sample
+./.git/hooks/commit-msg.sample
+./.git/hooks/fsmonitor-watchman.sample
+./.git/hooks/post-update.sample
+./.git/hooks/pre-applypatch.sample
+./.git/hooks/pre-commit.sample
+./.git/hooks/pre-merge-commit.sample
+./.git/hooks/pre-push.sample
+./.git/hooks/pre-rebase.sample
+./.git/hooks/pre-receive.sample
+./.git/hooks/prepare-commit-msg.sample
+./.git/hooks/push-to-checkout.sample
+./.git/hooks/update.sample
+./.git/index
+./.git/info/exclude
+./.git/logs/HEAD
+./.git/logs/refs/heads/main
+./.git/logs/refs/remotes/origin/HEAD
+./.git/logs/refs/remotes/origin/main
+./.git/objects/01/a87d8471deba46b49a62bf4f03183f2fbb742f
+./.git/objects/02/f6ae93f1c1cf6aa12541dec470ac23e20f27a5
+./.git/objects/03/e4fc654a61a093cc4930a51f0ba617ebd88c56
+./.git/objects/03/f93d3ecc31e6a39628549409443bc1f2ad5fd9
+./.git/objects/04/3a04a4177ae4a031d802c9093c69844311175a
+./.git/objects/05/346db0c88ab34abea054a4e372e4c88f25f934
+./.git/objects/06/537f24fa190969aff065faf51b1e43c0696ef6
+./.git/objects/0a/5e747c871c6beb9156d3afab363fe4594109a0
+./.git/objects/0a/927fe80431ed39b306f8dbfea4be156f67223e
+./.git/objects/0a/bb2936ef0177c90c294d75f3f73a903c43f209
+./.git/objects/10/157dc08df9e8df4ae3212225d23b22ba342d97
+./.git/objects/10/2b1cace0344c86bee15a36fef4a7f1a0bd9600
+./.git/objects/10/6dbd40d247a7dc47623371a5179fa2964a9be9
+./.git/objects/10/8b4443305b33fdee3e216c3144ecfd5cbcc894
+./.git/objects/10/ad68a195e5109fc4511455b52beb8bd4658d02
+./.git/objects/10/d2c17180436ff0bd01b3a929056d98012b455e
+./.git/objects/11/569357694e091bc569ace4024e8c4275f08a3f
+./.git/objects/14/2c61c7e55fe76cd1cdb37be1ce8836a9e1fd56
+./.git/objects/15/72799900226d464e1d36c0d03188ce42037874
+./.git/objects/15/a8723b095fa3596fb71d184da0d0c6bcc211fc
+./.git/objects/17/2627149bfa700580606fcff64816901ab3fb5e
+./.git/objects/18/380e9ede5e83e91c2b292fc00439a9812c7ed4
+./.git/objects/18/48938280b8c0d31ea6539185c8079dff4f23d6
+./.git/objects/18/b0044224086297a5b4aab752c439db563043e7
+./.git/objects/1a/75d4a90e055924466c1ec02014a3eebee5aa32
+./.git/objects/1b/b380eb7be0200be5177b055630666018eb3782
+./.git/objects/1e/82eabf8c25da89f731776a49a9a3ac6435833d
+./.git/objects/1f/32855ea74e7d7da6680c86597492ea92ec4475
+./.git/objects/1f/5492c4c20bc3d25fe8f5472833442ee4c7f3f8
+./.git/objects/21/1ae00893023396c1f68dcca0b846a4351e3aeb
+./.git/objects/21/7401d0bfb2c40ed6b9585fd742355e8feb1810
+./.git/objects/22/ef16103b7af258eb162bdcaf9982a69fe726ce
+./.git/objects/22/fb38d6d6cad1bbc77d01df1ee0c7831367d4c4
+./.git/objects/25/7bfd277f1305a31420f5eb7ad4dbacbbacb44e
+./.git/objects/26/4f00322970ad4957d99028102ac6bb812ab67a
+./.git/objects/26/646a45674ca17ecc73bb078dab220febaca99c
+./.git/objects/27/0c3ec265ad04aa4386d5461f3fa2b2f6b19bbc
+./.git/objects/28/efac47f60666c61f726db55e5dfeae77c8bf40
+./.git/objects/2b/f4b2ab2c585b362283f4ebdacd9ea76b68281b
+./.git/objects/2d/5959d9edb74d1b5c3c35a48aa54f0b845eb1df
+./.git/objects/2e/4df21af269edd2fbafb01a756072c180c988f3
+./.git/objects/2e/92b5b501b0500a7b708e1eca4e060f207cfd2a
+./.git/objects/2e/f73939f53fc652f8848b9d97c2a65235066ab1
+./.git/objects/2f/4dcb6331d44550e380887716b486f2ed45a550
+./.git/objects/35/667b8f12fb0c8eb0aca159b0480d455c97268e
+./.git/objects/36/b7820b37552b97da89c6db82693bde2cdec3dd
+./.git/objects/3c/de3fc10b7cbfeb78c3d384e462fe2ad6a0555c
+./.git/objects/3e/c5477fe0037450674d7e8add453836aebc79ad
+./.git/objects/3f/5b1d111a22331d803b57f60f0da6f945e735ad
+./.git/objects/3f/7a1491cb9d902153c5bb6f75d03761ee8a6022
+./.git/objects/41/bdd012e64acdd6e9fceaee051c6072f6a5be97
+./.git/objects/41/f6a361713ab4531ff4156b2672e869d04a5d07
+./.git/objects/42/50333dcb5624cac0ed08cb0a266b04dd2aa787
+./.git/objects/42/5c1bde975ad56cd44e7b975480203ae640088b
+./.git/objects/44/752f72cd055bf9e81555714247cb2df79b43ab
+./.git/objects/44/8e9c2c88ef522d47f59637fa221a0792ddb294
+./.git/objects/44/9e40f9c6ef37125e4864f9916a0eee5f0604a9
+./.git/objects/45/70c8e72cdea23ded22430da6d8b92065d41b65
+./.git/objects/46/8113a807cada6a0d7ad5398579a7152f3aeab3
+./.git/objects/48/05c9f7a9a1ff93cb78f72181e86d846c2583a9
+./.git/objects/49/bcc45ea80b6d0c3810be7d108909b5bf5f4829
+./.git/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904
+./.git/objects/4b/adc6aa34ebdc4df9bae34bd328e8149c52707f
+./.git/objects/4c/3d2af6f505bbf53c5be6f9fc1d46695a0074ce
+./.git/objects/4c/a1ac9078b07904d74922b2cdb2936254fff558
+./.git/objects/4c/b4b040409b8f6104316cf7a49eda9987508e0a
+./.git/objects/4d/7b350805ead20171e9f630d708f17103749479
+./.git/objects/4d/e48b18ffeb3a2d37f38a0c128d52499cbb98e7
+./.git/objects/4e/265c717369d29f35a6bc97bbf704dcdc076eb8
+./.git/objects/53/07d195b6c96f6c996e969cbf81731ed82938af
+./.git/objects/53/312947910dd282cfa80238ff52d55a86cb70be
+./.git/objects/53/76ba40be927f772897875a269a160dcb1c0c80
+./.git/objects/54/8f08615fcd85af7fd67bbfef574c1aa044ea0e
+./.git/objects/55/3054ad4d5cd1055afbd106d92f636939f92efc
+./.git/objects/55/b46e49e9dd12b2529d554574b22f1f97a6bbd1
+./.git/objects/58/0a0e9d24a9c1e5468ee16f83e7ff08e63a1767
+./.git/objects/5b/4fead8abc7fbac2a8bf6c0593658035d4b089d
+./.git/objects/5b/974efd60823afaa0398bbf9a8527d4017aa5f2
+./.git/objects/5e/0394d22583d1513041a84b587a0f2c1f6886ed
+./.git/objects/5f/8e17eb3223662c9bf0588d200f314595e39abe
+./.git/objects/62/cc471e1c313e92c38cb333f41651eb2ea0e166
+./.git/objects/63/eaabba71bbb900c0ec6df9a306dbc95d0fbb3b
+./.git/objects/64/8cbc901649d88fc552db97060213fa631dbd1d
+./.git/objects/67/5b123835e9b8c52ddab4d9de2b75cb23d2e882
+./.git/objects/67/796556d74cf1a6195b36720f75ff401526f9f9
+./.git/objects/67/ba764770b48d8fcb980ddbe3e3741764dd1782
+./.git/objects/6a/8b05a1fd0b43e9c896f3a1b9be82ffbbc3b52c
+./.git/objects/6d/d9f6a57cf27b0169a4c13be2264951b90ebfd0
+./.git/objects/6f/03ca569bb3a51cbd897d402fefb76a54ac769a
+./.git/objects/6f/2559595ace3d20390592c0d77c0ac37ad0f834
+./.git/objects/6f/712d8bd9e519c35772ab3845525c38663ed7e9
+./.git/objects/70/b60d275814f4712cd3c0138ddf44dcaf5dbdbd
+./.git/objects/72/0a640db447f8ffe2c510594202583a34a8aff8
+./.git/objects/73/01d9210548fa2ce5aa7d5bd20f9ec3eaefb532
+./.git/objects/73/c0790d825e2d46ee678438b9bf9b874e55ad9d
+./.git/objects/75/47f0da5275d0ed3bfd88de8ba8404236a26e46
+./.git/objects/76/c6a09ecf0ba97c8f31fab508eb30fa157e5dad
+./.git/objects/76/d614a19a786f99acbd19b3a918760096b8d00d
+./.git/objects/78/0824b087ea3c83200f5c53629d21b8d1d15a20
+./.git/objects/7b/710c54d932272cad8ec8ed3f6bfb948f88a138
+./.git/objects/7e/4413919c318ff6cbf0deb2ea490ea023ab3cf8
+./.git/objects/81/deb152d6d5b6fdd5126ab22d9e6eb0a3058118
+./.git/objects/82/88ee3a8e6e0d608322e22bceb8904febf7e2dc
+./.git/objects/83/32b47c2d67eb358128a767006868feabdef1e6
+./.git/objects/83/ba9b9f03c92693123bbc7793f6c77987391f47
+./.git/objects/84/106933f82cbddfe7ca63d346f9f8721050c860
+./.git/objects/84/375902eacaed1b114b1c0694d67ec35d31b834
+./.git/objects/85/b0952a455fa8b4c37ab7ebfcc76b348426c1fd
+./.git/objects/85/ee4a711b56f22c44625b2849ad54da52f09ac6
+./.git/objects/86/0a743140156685cdef38b20e34e350e926b2e6
+./.git/objects/87/3138ece2a60c1955ef3f8845baef51ed51d094
+./.git/objects/87/6665af8a3cc96f63e58810f5cc623bb1f1c2ce
+./.git/objects/87/bc0de0d605c0d50d8b6e09e3c32ffb5b12f9c2
+./.git/objects/88/a34977b1bb85a8b72a974e5e23aaade3cf96e6
+./.git/objects/89/6d7c24082ddae7a43d55078cab31fd227a61a3
+./.git/objects/89/74cf26a7dac5b685b2938a7046a113293f5c16
+./.git/objects/8a/00ef9e1dd341b953e81a625956e111348ec673
+./.git/objects/8a/26f598630ece9cc8ab2a8fad636239413e02df
+./.git/objects/8a/536fc7804f9212f1a230e581636086f7cf5990
+./.git/objects/8a/5a57eed79bf88299b63b2e769a39cdb90550ff
+./.git/objects/8a/f13477ed37f8cbf3230e1d4b3a290489373904
+./.git/objects/8c/21aea7e2b2a82ef3f985eb223eb1e3800a7000
+./.git/objects/92/6019db8bd5ed657e21087b5d3c858b2578f3b4
+./.git/objects/94/18a9f2f57bc45fb03f8c74a3d5473a62517159
+./.git/objects/95/00351f1c28ef2a5b97d264a082f7b6274de9ee
+./.git/objects/98/504ff8ebb59b6f6892b6664ec8a616a8a22178
+./.git/objects/9a/d905d9ef1539d10f4e1bec5e0c08ad9d407d42
+./.git/objects/9b/b984fd76957449bb57e0d583c54d62475259f8
+./.git/objects/9c/60306fde0ac2edbc49ac1b15668909a95d7b00
+./.git/objects/9d/ea3faf0074e7f1715dc38ab49bdc579fd9ccbd
+./.git/objects/9f/386fd90b8cea597c526fb0ff460db8ca22c3e9
+./.git/objects/a0/d4ed8755ac19471d31634ed4d2373045439c15
+./.git/objects/a3/51dc94f4d447592634d210513575c14a24afd3
+./.git/objects/a3/537aa8bfdd78a78614d8cbb24b2538afd6a115
+./.git/objects/a5/6d45baab0ef9f9dd09f66b5f49315e93a7a70c
+./.git/objects/a6/30d46a220c53c54a69ea54bfdb28fd0f3c3d6c
+./.git/objects/a7/1c82d1d079ea7bc14c6be8876f35a6eae4b5d2
+./.git/objects/a8/c86add29ca8acee8b13a9cf7c451502b71311e
+./.git/objects/ab/7c39470761b1ceff57d0c72466a98a42f405ad
+./.git/objects/ab/be09d90882089940afc40175da5276d760eaca
+./.git/objects/ac/076d28d09103a749f54139c4a81455e3e58573
+./.git/objects/ad/0a80241d6d9f253ef4a65a1d0a2f53974bee2a
+./.git/objects/ad/493df04bbfd84dece9acf2dcbf5fdb725d6264
+./.git/objects/af/092e1dfa4918fa2c91a69582b40cb2347f31d8
+./.git/objects/af/d3ddf493a56926c21c904d00cfa1b8c875c902
+./.git/objects/af/e295df7b8084a62e733772093d2c5bc6d1ff58
+./.git/objects/b2/a8c7b0b286ff1f69fb1ccfb2dd38b3d182c90b
+./.git/objects/b6/faf79e4f448704eb91b723eca6c51f984d86b0
+./.git/objects/b8/487a44567c925f284a458e74ce58e9844ce67c
+./.git/objects/b8/b9ca3fa3df52ffde8e268130a2a0f3fff2831b
+./.git/objects/b9/e3851aa60b53be02eb104021720e588c9918ce
+./.git/objects/bb/e4260c8c88e0c224ec237a2e2f8015b502dcb9
+./.git/objects/bc/48873c0d90ae89850945dbe5c543f080bbccd5
+./.git/objects/bf/47c7411569f813d329a5a98f35198b964b32d6
+./.git/objects/c0/b7fd249bc6d5e310b054aa373282bbefed380a
+./.git/objects/c1/297d1f6710532bc0bf236e2d79066f1192b534
+./.git/objects/c4/f2254a7230265704653c8cecb3cf0cc90cc267
+./.git/objects/c4/fc0dd187376a05bbd294cb647e2c9f0bbab8c8
+./.git/objects/c9/6658f616cbf2e5cd73d1dfccf77db99e32baba
+./.git/objects/cb/8a793bb2901024a611290ad4a523fe202317b2
+./.git/objects/cd/05e05196de1cd6835ae6c93dc7326fa987467b
+./.git/objects/ce/6877908422602ad07e258c47b4f56062eb28b6
+./.git/objects/cf/b5ad18c9621be05f598d10244d0faa2f4680e6
+./.git/objects/d0/78a73cdb9034a10683606b390d08f29fd9e052
+./.git/objects/d1/5d2174c471214c9105b30150812070145d2bf9
+./.git/objects/d1/aa7f831b1b36677eae7a3861b6b3e05d7eee68
+./.git/objects/d2/87c31f45c94e125719db3141f3315527e43ba0
+./.git/objects/d7/071d941b06114a0adcc961763986d6ed8b9e80
+./.git/objects/d9/2b65cc79910b7f282fb115c597ef3a8f8c4215
+./.git/objects/db/1dcfb2725c659c9091738551e6530853565774
+./.git/objects/dc/f37e9b84651e0c0861f7c5ca9c382d17ff2dfe
+./.git/objects/dc/f45a453c398e506e1062477b7cdcccdf9229c8
+./.git/objects/dd/79b6530ad977d2c4c38f71f04dd31f356b1142
+./.git/objects/de/1d1b3c002863f605dc196c8fea1a84f3aa1fd0
+./.git/objects/df/cffddd043ceab05513d8f6901d0a83092c3c9a
+./.git/objects/e0/2c35ad8dad5afabf2a6fec727a710b037b6a20
+./.git/objects/e1/d048a4c1921067fe72e1dd8daee1085a8a6046
+./.git/objects/e4/710ea5aa4cd72538f1d5fcf0897316b91a6286
+./.git/objects/e6/1a824ee0fe7b5d48560df4f7b56ad4ee4928a6
+./.git/objects/e7/40530a9d7b467178e97053ee0177be70cf1aad
+./.git/objects/e7/ade0a6fda50e35b8402598f2ad1b39bea14fcf
+./.git/objects/e7/c98b05d32538323b4f020534bb64ada98c471f
+./.git/objects/e8/dd963b23e2e3a643b6923dde4dcabdf9d21989
+./.git/objects/e8/ef1a48c1d527554279a05aa31e63c45497fc55
+./.git/objects/e9/73399a31e790671d131851781af8e455156abf
+./.git/objects/ec/b662ba631bf449fcc465bfe24c3cf1bfbc2029
+./.git/objects/ed/8c7931a8cad62c55dbb9b8f1f3bd6e9eb8dab8
+./.git/objects/ee/27b83438a8d64205f29a4a902d9d56854d8139
+./.git/objects/ee/cbadbb2d81d3179dd0ae16eaa99e7d2c34aceb
+./.git/objects/ef/1358eff8d615665123da4f1297a77d046abc14
+./.git/objects/f1/6387726efe40567e3dc54a3906682385ed5d5d
+./.git/objects/f2/efa847d0b204188f009f1f752196c0354f08a6
+./.git/objects/f2/f909d4eb62aee374bd30e23e1d295ed7e2beba
+./.git/objects/f3/8003b2e1ced56cacc45e86333e691756489447
+./.git/objects/f4/24852830e555209d699cf774d57e259f898311
+./.git/objects/f6/2432dba495c7f258a8938598c0754a25e2d058
+./.git/objects/f7/9aa81eaf81b95206468db3c8a456096803e5a0
+./.git/objects/f8/bc385cfa97f864e4a819a6a6dcd159a5c4ae7c
+./.git/objects/f8/c675866047dcdf5288779d73cd9fafe22a9905
+./.git/objects/fb/a29ec58226da73517ea71036f867435388af5e
+./.git/objects/ff/49882533d012a64fd6436b8d59eaf651e8ac30
+./.git/objects/pack/pack-0dc816e08ff4f6106ab2d2164f93e3e8680e2923.idx
+./.git/objects/pack/pack-0dc816e08ff4f6106ab2d2164f93e3e8680e2923.pack
+./.git/objects/pack/pack-1521978b2f3bbe2ff999ce93db5e4416793e0684.idx
+./.git/objects/pack/pack-1521978b2f3bbe2ff999ce93db5e4416793e0684.pack
+./.git/objects/pack/pack-1815c0d504aacb39727256b92e5eef6f59e10082.idx
+./.git/objects/pack/pack-1815c0d504aacb39727256b92e5eef6f59e10082.pack
+./.git/objects/pack/pack-33842aac62fb6a833667c4be11cd14aa44a8533d.idx
+./.git/objects/pack/pack-33842aac62fb6a833667c4be11cd14aa44a8533d.pack
+./.git/objects/pack/pack-441306e357ee4e5660be901481aad20e5fae28d7.idx
+./.git/objects/pack/pack-441306e357ee4e5660be901481aad20e5fae28d7.pack
+./.git/objects/pack/pack-4be79d8e24f85419d3bc5c5710d8eacbd5896f39.idx
+./.git/objects/pack/pack-4be79d8e24f85419d3bc5c5710d8eacbd5896f39.pack
+./.git/objects/pack/pack-53e62ab5b73314f62523fcc3cefd37657f850a4a.idx
+./.git/objects/pack/pack-53e62ab5b73314f62523fcc3cefd37657f850a4a.pack
+./.git/objects/pack/pack-670baaa87390216b2d763b98cb9ead3e68b81600.idx
+./.git/objects/pack/pack-670baaa87390216b2d763b98cb9ead3e68b81600.pack
+./.git/objects/pack/pack-6ef693745450978915f75cb901732f18b7ea4939.idx
+./.git/objects/pack/pack-6ef693745450978915f75cb901732f18b7ea4939.pack
+./.git/objects/pack/pack-756734cae4d3c0ade65c17f8dc0ecf3ce6475143.idx
+./.git/objects/pack/pack-756734cae4d3c0ade65c17f8dc0ecf3ce6475143.pack
+./.git/objects/pack/pack-79e9451fb0f594ead2dabec014908fbe74b2bbdb.idx
+./.git/objects/pack/pack-79e9451fb0f594ead2dabec014908fbe74b2bbdb.pack
+./.git/objects/pack/pack-8797c82d9927cf223526dd441ded36aa8928c511.idx
+./.git/objects/pack/pack-8797c82d9927cf223526dd441ded36aa8928c511.pack
+./.git/objects/pack/pack-9b0f74c47fdda08bd95ab01346dc2bc79aeb472f.idx
+./.git/objects/pack/pack-9b0f74c47fdda08bd95ab01346dc2bc79aeb472f.pack
+./.git/objects/pack/pack-a15872ec24f4037ba70475c1867d2a8aa6ccf308.idx
+./.git/objects/pack/pack-a15872ec24f4037ba70475c1867d2a8aa6ccf308.pack
+./.git/objects/pack/pack-b8844be02a6cb55d4ffd39375204684e4e2bbd12.idx
+./.git/objects/pack/pack-b8844be02a6cb55d4ffd39375204684e4e2bbd12.pack
+./.git/objects/pack/pack-c0b2837dfade9469b2456a6cab0b5b2c2ac73c49.idx
+./.git/objects/pack/pack-c0b2837dfade9469b2456a6cab0b5b2c2ac73c49.pack
+./.git/objects/pack/pack-d4f8594684e8dbb5138bf8ef098d6a25ba51337d.idx
+./.git/objects/pack/pack-d4f8594684e8dbb5138bf8ef098d6a25ba51337d.pack
+./.git/objects/pack/pack-e5d5dfb2727e481b889ca6e8dd55f9b45c5a95e1.idx
+./.git/objects/pack/pack-e5d5dfb2727e481b889ca6e8dd55f9b45c5a95e1.pack
+./.git/packed-refs
+./.git/refs/heads/main
+./.git/refs/remotes/origin/HEAD
+./.git/refs/remotes/origin/main
+./ball.py
+./python/array_computing/animate_ball_trajectories.py
+./python/array_computing/fill_arrays_by_for_loop.py
+./python/array_computing/fill_arrays_vectorially.py
+./python/array_computing/fill_gaussian_lists.py
+./python/array_computing/plot_gaussian.py
+./python/array_computing/plot_trajectory.py
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland # cd python/
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # touch test1.py
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # touch test2.py
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # vi test1.py
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # vi test2.py
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # grep "import numpy" .py
+grep: .py: No such file or directory
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # grep "import numpy" *.py
+test1.py:import numpy as np
+test2.py:import numpy as np
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # find . -name "*.py" | xargs grep "import numpy"
+./3d_visualization/ball.py:import numpy as np
+./3d_visualization/two_balls_cross.py:import numpy as np
+./3d_visualization/birthday_vector.py:import numpy as np
+./3d_visualization/birthday_station.py:import numpy as np
+./3d_visualization/two_balls_bounce.py:import numpy as np
+./array_computing/animate_ball_trajectories.py:import numpy as np
+./array_computing/plot_trajectory.py:import numpy as np
+./array_computing/fill_arrays_vectorially.py:import numpy as np
+./array_computing/fill_arrays_by_for_loop.py:import numpy as np
+./computing_with_formulas/dictionaries_and_strings/make_hertzsprung_russell_diagram.py:import numpy as np
+./test2.py:import numpy as np
+./test1.py:import numpy as np
+./project/project.py:#   import numpy as np
+./user_input/convert_temperature.py:import numpy as np 
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # rm test1.py test2.py
+(venv) root@deepnote:/work/scientific_programming_rosaliehelgeland/python # 

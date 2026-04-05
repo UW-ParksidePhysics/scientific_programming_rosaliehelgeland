@@ -1,11 +1,11 @@
-Partner:
+Partner: i did it myself again
 
 What Went Well
 ---
 
 
 What Would Make Next Time 1% Better
----
+I had issues with the ping command (I even tried downloading it) so I just ran python instead, also I was too scared to delete any processes because I didn't wanna mess the terminal up 
 * Focus:
 
 * Communication:
@@ -14,4 +14,4 @@ What Would Make Next Time 1% Better
 
 * Division of responsibility
 
-* Code quality:
+* Code quality: 5/10
