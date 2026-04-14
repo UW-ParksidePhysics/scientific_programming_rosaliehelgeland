@@ -1,17 +1,17 @@
-Partner:
+Partner: you
 
 What Went Well
----
+fast and easy 
 
 
 What Would Make Next Time 1% Better
----
-* Focus:
 
-* Communication:
+* Focus: 10/10
 
-* Pacing:
+* Communication: 10/10
 
-* Division of responsibility
+* Pacing: 10/10
 
-* Code quality:
+* Division of responsibility: 10/10
+
+* Code quality: 10/10 
