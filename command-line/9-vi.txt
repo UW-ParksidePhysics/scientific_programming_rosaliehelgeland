@@ -1,34 +1,20 @@
 (venv) root@deepnote:~/work # vi text.txt
-(venv) root@deepnote:~/work # ls
-constants_test.txt  example.txt  logarithmic_sum.out  sample.txt  scientific_programming_rosaliehelgeland
 (venv) root@deepnote:~/work # vi test.py
-
-[No write since last change]
-python: can't open file '/datasets/_deepnote_work/test.py': [Errno 2] No such file or directory
-
-shell returned 2
-
-Press ENTER or type command to continue
-(venv) root@deepnote:~/work # python test.py
-hello, world!
-1+1 = 2
-(venv) root@deepnote:~/work # vi test.py
-(venv) root@deepnote:~/work # cat test.py
-def print_and_calculate(text, numbers):
-    print(f'{text}')
-    sum_words = ""
-    for number in numbers:
-        sum_words += str(number)+"+"
-    print(f'{sum_words[:-1]} = {sum(numbers)}')
-    return 
+(venv) root@deepnote:~/work # vi test1.py
+(venv) root@deepnote:~/work # cat !$
+cat test1.py
+def print_text_string_and_calculate_sum(text_string, numbers):
+    print(text_string)
+    print(f"{numbers[0]}+{numbers[1]}={sum(numbers)}")
 
 
-if __name__ == "__main__":
-    print_and_calculate("hello, world!", [1, 1])
+
+if __name__ == '__main__':
+        print_text_string_and_calculate_sum("Hello, world!", [1, 1])
 
 
-(venv) root@deepnote:~/work # !p
-python test.py
-hello, world!
-1+1 = 2
+(venv) root@deepnote:~/work # python !$
+python test1.py
+Hello, world!
+1+1=2
 (venv) root@deepnote:~/work # 
