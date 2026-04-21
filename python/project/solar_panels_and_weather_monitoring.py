@@ -34,6 +34,12 @@ from math import sin, cos
 
 import numpy as np 
 import matplotlib.pyplot as plt
+from datetime import datetime
+from math import sin, cos, pi
+import astropy
+from astropy.time import Time
+from astropy.coordinates import EarthLocation, AltAz, get_sun
+import astropy.units as u 
 
 
 
@@ -65,20 +71,15 @@ import matplotlib.pyplot as plt
 # Typical breakdown:
 # - read_data(...): load/validate input data
 
-arr = np.genfromtxt('chicago_airport_data.csv', delimiter=',',dtype=str)
+#file locations stored in tuple
 
-data = {
-    'column headings': arr[0, :1].tolist(),
-
-    'row headings': arr[:1, 0].tolist(),
-
-    'array': np.asarray(arr[1:, 1:], dtype = np.float)
-}
-
-
-data['row headings'].append('sum')
-
-data['column sum'] = np.sum(data['array'], axis = 1).tolist()
+file_locations = (
+    "/work/scientific_programming_rosaliehelgeland/python/project/data/chicago_airport_data.csv",
+    "/work/scientific_programming_rosaliehelgeland/python/project/data/hourly_solar_data_2024_2026.csv",
+    "/work/scientific_programming_rosaliehelgeland/python/project/data/2024-power-irradiance-weather.csv",
+    "/work/scientific_programming_rosaliehelgeland/python/project/data/2025-power-irradiance-weather.csv",
+    "/work/scientific_programming_rosaliehelgeland/python/project/data/2026-power-irradiance-weather.csv"
+    )
 
 
 
@@ -87,7 +88,222 @@ data['column sum'] = np.sum(data['array'], axis = 1).tolist()
 
 
 
+def create_data_array(file_location):
+    """
+    imports data in csv files and converts the data to arrays, 
+    uses those arrays to store time values as strptime values for easy access and consistent data
+    stores arrays in dictionaries 
+    """
 
+    arr = np.genfromtxt(file_location, delimiter=',',dtype=str)
+
+    
+    start_index = 0
+
+
+    for line in arr:
+        if len(line[1]) == 0:
+            start_index +=1
+
+        else:
+            continue
+    print(arr[start_index])
+    
+    headings = arr[start_index]
+
+    data = arr[start_index+1]
+
+    data = []
+
+
+    if headings[0] == "DATE":
+
+        for line in data:
+
+            date_time = datetime.strptime(line[0], "%m/%d/%Y")
+
+            dates.append(date_time)
+
+    
+    elif headings[0] == "YEAR":
+
+        for line in data:
+        
+            date_string = f"{line[1]}/{line[2]}/{line[0]}/{line[3]}"
+            
+
+            date_time = datetime.strptime(date_string, "%m/%d/%Y/%H")
+
+            dates.append(date_time)
+
+    elif header[0] == "Site Time":
+
+        for line in data:
+            
+            date_time = datetime.strptime(line[0], "%d-%m-%Y")
+
+            dates.append(date_time)
+    
+
+    return np.array(dates), headers, data
+            
+
+
+
+
+
+#if __name__ == '__main__':
+    #for file in file_locations:
+       # dates_and_data = create_data_array(file)
+
+       # print(dates_and_data)
+
+#-------------------------------------------------------------------------
+#DECIMAL TO TIME FUNCTION
+
+def convert_decimals_to_time(arr):
+    arr = np.mod(arr, 24)
+
+    hours = np.floor(arr).astype(int)
+    minutes = np.floor((arr-hours)*60).astype(int)
+
+    vectorized = np.vectorize(lambda h, m: f'{h:02d}:{m:02d}')
+
+    return vectorized(hours, minutes)
+
+
+
+
+
+#calculating and storing solar geometry constants
+
+days_of_the_year = np.arange(1, 366)
+
+def equation_of_time(N):
+    B = np.radians((360/364.)*(N-81))
+
+    ET = 9.87*sin(2*B)-7.53*cos(B)-1.5*sin(B)
+
+    return ET
+
+equation_of_time_results = []
+
+for N in days_of_the_year:
+    equation_of_time_results.append(equation_of_time(N))
+
+
+
+
+
+time_difference_greenwich= 5 #hours
+
+standard_meridian = time_difference_greenwich*15 #degrees
+
+hours_in_the_day = np.arange(1, 25)
+
+
+
+
+
+#standard time function 
+
+def calculate_standard_time(H):
+    standard_time = H+time_difference_greenwich
+
+    if standard_time > 24:
+        return standard_time-24
+
+    else:
+        return standard_time
+
+standard_times = []
+
+for H in hours_in_the_day:
+    standard_time = calculate_standard_time(H)
+
+    standard_times.append(standard_time)
+
+
+
+
+
+#apparent solar time function
+
+local_longitude = -87.851997
+
+local_latitude = 42.647228
+
+
+ET = np.array(equation_of_time_results)[:, None]
+
+LST = np.array(standard_times)[None, :]
+
+apparent_solar_times = LST + (ET + 4*(standard_meridian - local_longitude)) /60
+
+#print(apparent_solar_times)
+
+
+
+
+#DECLINATION ANGLE 
+
+declination_angles = []
+
+for N in days_of_the_year:
+    inner_function = np.radians((360/365.)*(284+N))
+
+    DA = 23.45*sin(inner_function)
+
+    declination_angles.append(DA)
+
+#print(declination_angles)
+
+
+
+#HOUR ANGLES
+
+hour_angles = (apparent_solar_times - 12)*15
+
+
+
+if __name__ == '__main__':
+    #EQUATION OF TIME FORMATTING 
+    formatted_equation_of_time_results = convert_decimals_to_time(np.array(equation_of_time_results) / 60)
+    
+    print(f'equation of time: {formatted_equation_of_time_results}')
+
+    #STANDARD TIME FORMATTING
+    formatted_standard_times = convert_decimals_to_time(standard_times)
+
+    print(f'standard times: {formatted_standard_times}')
+
+    #APPARENT SOLAR TIME FORMATTING
+    formated_apparent_solar_times = convert_decimals_to_time(apparent_solar_times)
+
+    print(f'apparent solar times: {formated_apparent_solar_times}')
+
+
+times = Time([
+    f"{year}-{day:03d}T{hour:02d}:00:00"
+    for year in range(2024,2025)
+    for day in range(1, 366)
+    for hour in range(24)
+    ],format = 'yday'
+)
+    
+location = EarthLocation(
+    lat = local_latitude * u.deg,
+    lon = local_longitude * u.deg
+)
+
+altaz = AltAz(obstime=times, location=location)
+
+sun = get_sun(times).transform_to(altaz)
+
+azimuth_angle = sun.az.deg
+altitude_angle = sun.alt.deg
+
+print(azimuth_angle, altitude_angle, sun, altaz)
 
 # - compute_derived_parameters(...): compute values that depend on inputs
 # - simulate(...): compute arrays / time series (no plotting)
@@ -141,4 +357,4 @@ data['column sum'] = np.sum(data['array'], axis = 1).tolist()
 #    - visualization creation
 # 4) Return results (arrays, figure objects) instead of printing everything
 #
-# Keep plotting separate from physics/math wherever practical.
+# Keep plotting separate from physics/math wherever pmit n snsntegnT(h)p
