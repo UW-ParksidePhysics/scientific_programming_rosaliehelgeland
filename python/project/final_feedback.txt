@@ -1,0 +1,2 @@
+- Can you layer several graphs on top of each other?
+- How might we look for correlation between two physically different quantities (like temperature and irradiance)?
