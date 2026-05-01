@@ -595,4 +595,4 @@ if __name__ == '__main__':
 
     months = list(range(1, 13))
 
-    graph_datasets(years[2], months[2], "rain", "real_irradiance", "power_output")
+    graph_datasets(years[2], months[1], "humidity", "real_irradiance", "power_output")
