@@ -30,15 +30,7 @@
 #   1) Standard library imports (e.g., math, pathlib, dataclasses)
 #   2) Third-party imports (e.g., numpy, scipy, matplotlib, plotly)
 #   3) Local/project imports (your own modules in this repo/package)
-from math import sin, cos
 
-import numpy as np 
-from datetime import datetime
-from math import sin, cos, pi, radians
-import astropy
-from astropy.time import Time
-from astropy.coordinates import EarthLocation, AltAz, get_sun
-import astropy.units as u 
 
 
 
@@ -134,6 +126,11 @@ def create_data_array(file_location):
     stores arrays in dictionaries 
     """
 
+    import numpy as np
+    import datetime as datetime
+    from datetime import datetime
+    from astropy.time import Time
+
     arr = np.genfromtxt(file_location, delimiter=',',dtype=str)
 
     
@@ -203,17 +200,12 @@ def create_data_array(file_location):
     return times, values, headings
             
 
-
-
-#if __name__ == '__main__':
-    #for file in file_locations:
-        #results = create_data_array(file)
-        #print(results)
-
 #-------------------------------------------------------------------------
 #DECIMAL TO TIME FUNCTION
 
 def convert_decimals_to_time(arr):
+    import numpy as np
+
     arr = np.mod(arr, 24)
 
     hours = np.floor(arr).astype(int)
@@ -253,6 +245,8 @@ def pull_and_store_data(values, headings, name, default = None):
 
 
 def calculate_equation_of_time(N):
+    import numpy as np
+
     B = np.radians((360/364.)*(N-81))
 
     ET = 9.87*np.sin(2*B)-7.53*np.cos(B)-1.5*np.sin(B)
@@ -262,11 +256,14 @@ def calculate_equation_of_time(N):
 
 
 def calculate_hour_angles(solar_time_hours):
+    import numpy as np
     return np.radians(15*(solar_time_hours - 12))
 
 
 
 def calculate_declination_angles(n):
+    import numpy as np
+
     return np.radians(
         23.45 * np.sin(np.radians((360/365)*  (284 + n)))
     )
@@ -274,6 +271,7 @@ def calculate_declination_angles(n):
 
 
 def calculate_solar_altitudes(declination_angle, hour_angle, latitude):
+    import numpy as np
     SA = np.arcsin(
         np.sin(declination_angle) * np.sin(latitude) + 
         np.cos(declination_angle) * np.cos(latitude) * np.cos(hour_angle)
@@ -282,6 +280,7 @@ def calculate_solar_altitudes(declination_angle, hour_angle, latitude):
 
 
 def calculate_solar_zenith_angles(altitude):
+    import numpy as np
     ZA = np.pi/2 - altitude
 
     return ZA
@@ -290,6 +289,7 @@ def calculate_solar_zenith_angles(altitude):
 #CALCULATING IDEAL IRRADIANCE/POWER
 
 def calculate_ideal_irradiances(altitude, I0=1361):
+    import numpy as np
     IR = I0 * np.maximum(np.sin(altitude), 0)
 
     return IR
@@ -297,6 +297,9 @@ def calculate_ideal_irradiances(altitude, I0=1361):
 
 
 def compute_daily_average_daily_values(times, values):
+    import numpy as np
+    import datetime as datetime
+
     datetimes = times.to_datetime()
 
     dates = np.array([DT.date() for DT in datetimes])
@@ -324,9 +327,14 @@ def compute_daily_average_values(times, values):
     stores averages in a list and then converts the list
     to an array for easy graphing
     """
+    import numpy as np 
+    import datetime as datetime
+
     datetimes = times.to_datetime()
 
-    dates = np.array([DT.date() for DT in datetimes])
+    values = np.array(values).flatten()
+
+    dates = np.array([dt.date() for dt in datetimes])
 
     unique_dates = np.unique(dates)
 
@@ -390,6 +398,47 @@ def align_three_sets_of_data(date_1, date_2, date_3, values_1, values_2, values_
         values_3[frame_3]
     )
 
+def align_four_sets_of_data(date_1, date_2, date_3, date_4, values_1, values_2, values_3, values_4):
+    common_dates = np.intersect1d(
+        np.intersect1d(date_1, date_2),
+        np.intersect1d(date_3, date_4)
+    )
+
+    frame_1 = np.isin(date_1, common_dates)
+    frame_2 = np.isin(date_2, common_dates)
+    frame_3 = np.isin(date_3, common_dates)
+    frame_4 = np.isin(date_4, common_dates)
+
+    return(
+        common_dates,
+        values_1[frame_1],
+        values_2[frame_2],
+        values_3[frame_3],
+        values_4[frame_4]
+    )
+
+def align_all_data(date_1, date_2, date_3, date_4, date_5, values_1, values_2, values_3, values_4, values_5):
+    common_dates = np.intersect1d(
+        np.intersect1d(
+            np.intersect1d(date_1, date_2), 
+            np.intersect1d(date_3, date_4)
+        ),
+        date_5)
+
+    frame_1 = np.isin(date_1, common_dates)
+    frame_2 = np.isin(date_2, common_dates)
+    frame_3 = np.isin(date_3, common_dates)
+    frame_4 = np.isin(date_4, common_dates)
+    frame_5 = np.isin(date_5, common_dates)
+
+    return(
+        common_dates,
+        values_1[frame_1],
+        values_2[frame_2],
+        values_3[frame_3],
+        values_4[frame_4],
+        values_5[frame_5]
+    )
 #---------------------------------------------------------------------------------------------------------
 
 def get_aligned_data(variable1, variable2):
@@ -398,71 +447,292 @@ def get_aligned_data(variable1, variable2):
 
     return align_different_datasets_by_time(set1["dates"], set2["dates"], set1["values"], set2["values"])
 
+#use np.corrcoef to compute coorelation. store r values and graph them. (dotted line with first graph (color indigo or red/purple mustard?))
 
-def graph_datasets(year, month, variable, irradiance_key, power_key):
-    import matplotlib.pyplot as plt 
+def find_graphable_data(year, month, irradiance_key, power_key, variable_key1, variable_key2 = None, variable_key3 = None):
+    import numpy as np
 
     irradiance_dates = all_data[irradiance_key]["dates"]
     irradiance_values = all_data[irradiance_key]["values"]
-    variable_dates = all_data[variable]["dates"]
-    variable_values = all_data[variable]["values"]
     power_dates = all_data[power_key]["dates"]
     power_values = all_data[power_key]["values"]
 
-    dates_aligned, irradiance_aligned, variable_aligned, power_aligned = align_three_sets_of_data(
-        irradiance_dates, variable_dates, power_dates,
-        irradiance_values, variable_values, power_values
-    )
+    variable_dates1 = all_data[variable_key1]["dates"]
+    variable_values1 = all_data[variable_key1]["values"]
 
-    year = int(year)
+    if variable_key2 == None and variable_key3 == None:
 
-    filtered_date = np.array([
-        (d.year == year and d.month == month)
-        for d in dates_aligned
-    ])
+        dates_aligned, irradiance_aligned, variable_aligned, power_aligned = align_three_sets_of_data(
+            irradiance_dates, variable_dates1, power_dates,
+            irradiance_values, variable_values1, power_values
+        )
     
-    dates = dates_aligned[filtered_date]
-    irradiances = irradiance_aligned[filtered_date]
-    weather_input = variable_aligned[filtered_date]
-    power_output = power_aligned[filtered_date]
+        year = int(year)
 
-    unit1 = all_data[irradiance_key]["unit"]
-    unit2 = all_data[variable]["unit"]
-    unit3 = all_data[power_key]["unit"]
+        filtered_date = np.array([
+            (d.year == year and d.month == month)
+            for d in dates_aligned
+        ])
 
+        dates = dates_aligned[filtered_date]
+        irradiance = irradiance_aligned[filtered_date]
+        power = power_aligned[filtered_date]
+        weather1 = variable_aligned[filtered_date]
 
-    fig, (ax1, ax3) = plt.subplots(2)
-    ax2 = ax1.twinx()
+        return dates, irradiance, power, weather1
     
-    fig.suptitle(f'{variable} vs irradiance and power output')
+    elif variable_key3 == None:
+        variable_dates2 = all_data[variable_key2]["dates"]
+        variable_values2 = all_data[variable_key2]["values"]
 
-    line1, = ax1.plot(dates, irradiances, label = f"Irradiance ({unit1})", color = 'cyan')
-    ax1.set_ylabel(f"Irradiance ({unit1})")
+        dates_aligned, irradiance_aligned, variable_aligned1, variable_aligned2, power_aligned = align_four_sets_of_data(
+            irradiance_dates, variable_dates1, variable_dates2, power_dates,
+            irradiance_values, variable_values1, variable_values2, power_values
+        )
 
-    line2, = ax2.plot(dates, weather_input, label = f"{variable.capitalize()} ({unit2})", color = 'orange')
-    ax2.set_ylabel(f"{variable.capitalize()}({unit2})")
+        year = int(year)
+
+        filtered_date = np.array([
+            (d.year == year and d.month == month)
+            for d in dates_aligned
+        ])
+
+        dates = dates_aligned[filtered_date]
+        irradiance = irradiance_aligned[filtered_date]
+        power = power_aligned[filtered_date]
+        weather1 = variable_aligned1[filtered_date]
+        weather2 = variable_aligned2[filtered_date]
+
+        return dates, irradiance, power, weather1, weather2
     
-    lines = [line1, line2]
-    labels = [line.get_label() for line in lines]
+    else:
+        variable_dates2 = all_data[variable_key2]["dates"]
+        variable_values2 = all_data[variable_key2]["values"]
+        variable_dates3 = all_data[variable_key3]["dates"]
+        variable_values3 = all_data[variable_key3]["values"]
 
-    ax1.legend(lines, labels, loc='upper right')
-    ax1.tick_params(axis='x', rotation=45)
+        dates_aligned, irradiance_aligned, variable_aligned1, variable_aligned2, variable_aligned3, power_aligned = align_all_data(
+            irradiance_dates, variable_dates1, variable_dates2, variable_dates3, power_dates,
+            irradiance_values, variable_values1, variable_values2, variable_values3, power_values
+        )
 
-    ax3.plot(dates, power_output, label = f"Power output {unit3}")
-    ax3.legend()
-    ax3.tick_params(axis='x', rotation=45)
+        year = int(year)
 
-    fig.tight_layout()
+        filtered_date = np.array([
+            (d.year == year and d.month == month)
+            for d in dates_aligned
+        ])
+
+        dates = dates_aligned[filtered_date]
+        irradiance = irradiance_aligned[filtered_date]
+        power = power_aligned[filtered_date]
+        weather1 = variable_aligned1[filtered_date]
+        weather2 = variable_aligned2[filtered_date]
+        weather3 = variable_aligned3[filtered_date]
+
+        return dates, irradiance, power, weather1, weather2, weather3
+
+
+
+def compute_correlation(weather, irr):
+    import numpy as np
+    r = np.corrcoef(weather, irr)[0, 1]
+    return r
+
+
+def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variable_key2 = None, variable_key3 = None):
+    import matplotlib.pyplot as plt 
+
+    irradiance_unit = all_data[irradiance_key]["unit"]
+    weather1_unit = all_data[variable_key1]["unit"]
+    power_unit = all_data[power_key]["unit"]
+
+    def graph_weather1(dates, irradiances, weather1):
+        ax1.set_title(f"{variable_key1.capitalize()} vs. Irradiance")
+
+        line1, = ax1.plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
+        ax1.set_ylabel(f"Irradiance ({irradiance_unit})")
+
+        line2, = ax2.plot(dates, weather1, label = f"{variable_key1.capitalize()} ({weather1_unit})", color = 'orange')
+        ax2.set_ylabel(f"{variable_key1.capitalize()} ({weather1_unit})")
+
+
+        lines = [line1, line2]
+        labels = [line.get_label() for line in lines]
+
+        fig.subplots_adjust(right=0.75)
+
+        ax1.legend(lines, labels, loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        #ax1.legend(lines, labels, loc = 'upper right', bbox_to_anchor=(1.01, 1))
+        ax1.tick_params(axis='x', rotation=45)
+
+    def graph_weather2(dates, irradiances, weather2):
+        ax3.set_title(f"{variable_key2.capitalize()} vs. Irradiance")
+
+        line1, = ax3.plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
+        ax3.set_ylabel(f"Irradiance ({irradiance_unit})")
+
+        line2, = ax4.plot(dates, weather2, label = f"{variable_key2.capitalize()} ({weather2_unit})", color = 'lime')
+        ax4.set_ylabel(f"{variable_key2.capitalize()} ({weather2_unit})")
+
+        lines = [line1, line2]
+        labels = [line.get_label() for line in lines]
+
+        fig.subplots_adjust(right=0.75)
+        
+        ax3.legend(lines, labels, loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax3.tick_params(axis='x', rotation=45)
     
-    filename = f"{variable}_{year}_{month}.png"
-    fig.savefig(filename)
+    def graph_correlation(irradiance, weather, weather_key, weather_unit):
+        ax_corr.scatter(weather, irradiance)
 
-    print(f"Graph saved as {filename}")
-    print(f"In workbook, run:")
-    print(f"from IPython.display import Image")
-    print(f"Image(filename='{filename}')")
+        coefficients= np.polyfit(weather, irradiance, 1)
+        trend = np.poly1d(coefficients)
 
-    plt.close()
+        indices = np.argsort(weather)
+        ax_corr.plot(weather[indices], trend(weather[indices]), color='red', linestyle='--', label="Trendline")
+        ax_corr.set_xlabel(f"{weather_key.capitalize()} ({weather_unit})")
+        ax_corr.set_ylabel(f"Irradiance ({irradiance_unit})")
+
+        correlation = compute_correlation(weather, irradiance)
+
+        ax_corr.set_title(f"{weather_key.capitalize()} vs Irradiance Correlation: r = {correlation:.3f}")
+        ax_corr.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+
+    if variable_key2 == None and variable_key3 == None:
+
+        dates_input, irradiance_input, power_input, weather_input1 = find_graphable_data(year, month, irradiance_key, power_key, variable_key1)
+
+        fig, (ax1, ax_corr, ax3) = plt.subplots(
+            3, 1, 
+            figsize=(12.5, 10),
+            gridspec_kw={"height_ratios": [2, 2, 2]}
+            )
+        ax2 = ax1.twinx()
+
+        fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x=0.39,fontsize=16)
+
+        graph_weather1(dates_input, irradiance_input, weather_input1)
+
+        graph_correlation(irradiance_input, weather_input1, variable_key1, weather1_unit)
+
+        ax3.set_title("Power Output")
+
+        ax3.plot(dates_input, power_input, label = f"Power output {power_unit}")
+        ax3.set_ylabel(f"Power Output {power_unit}")
+
+        ax3.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax3.tick_params(axis = 'x', rotation=45)
+
+        fig.tight_layout()
+
+        filename = f"{variable_key1}_{year}_{month}.png"
+        fig.savefig(filename)
+
+        print(f"Graph saved as {filename}")
+        print(f"In workbook, run")
+        print(f"from IPython.display import Image")
+        print(f"Image(filename='{filename}')")
+
+        plt.close()
+
+    
+    elif variable_key3 == None:
+        dates_input, irradiance_input, power_input, weather_input1, weather_input2 = find_graphable_data(year, month, irradiance_key, power_key, variable_key1, variable_key2)
+
+        weather2_unit = all_data[variable_key2]["unit"]
+
+        fig, (ax1, ax3, ax5) = plt.subplots(3, figsize=(12.5, 9.75))
+        ax2 = ax1.twinx()
+
+        fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x=0.39, fontsize=16)
+
+        graph_weather1(dates_input, irradiance_input, weather_input1)
+
+        ax4 = ax3.twinx()
+
+        graph_weather2(dates_input, irradiance_input, weather_input2)
+
+        ax5.set_title("Power Output")
+
+        ax5.plot(dates_input, power_input, label = f"Power output {power_unit}")
+        ax5.set_ylabel(f"Power Output ({power_unit})")
+
+        ax5.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax5.tick_params(axis='x', rotation = 45)
+
+        fig.tight_layout()
+
+        filename = f"{variable_key1}_{variable_key2}_{year}_{month}.png"
+        fig.savefig(filename)
+
+        print(f"Graph saved as {filename}")
+        print(f"In workbook, run")
+        print(f"from IPython.display import Image")
+        print(f"Image(filename='{filename}')")
+
+        plt.close()
+
+
+
+    else:
+        dates_input, irradiance_input, power_input, weather_input1, weather_input2, weather_input3 = find_graphable_data(
+            year, month, irradiance_key,
+            power_key, variable_key1,
+            variable_key2, variable_key3
+        )
+
+        weather2_unit = all_data[variable_key2]["unit"]
+        weather3_unit = all_data[variable_key3]["unit"]
+
+        fig, (ax1, ax3, ax5, ax7) = plt.subplots(4, figsize=(12.5, 15))
+
+        fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x = 0.39, fontsize=16)
+
+        ax2 = ax1.twinx()
+        graph_weather1(dates_input, irradiance_input, weather_input1)
+
+        ax4 = ax3.twinx()
+        graph_weather2(dates_input, irradiance_input, weather_input2)
+
+        ax6 = ax5.twinx()
+
+        ax5.set_title(f"{variable_key3.capitalize()} vs Irradiance")
+
+        line1, = ax5.plot(dates_input, irradiance_input, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
+        ax5.set_ylabel(f"Irradiance ({irradiance_unit})")
+
+        line2, = ax6.plot(dates_input, weather_input3, label = f"{variable_key3.capitalize()} ({weather3_unit})", color = (0/255, 128/255, 255/255))
+        ax6.set_ylabel(f"{variable_key3.capitalize()} ({weather3_unit})")
+
+        lines = [line1, line2]
+        labels = [line.get_label() for line in lines]
+
+        ax5.legend(lines, labels, loc='upper left', bbox_to_anchor=(1.055, 1))
+        ax5.tick_params(axis = 'x', rotation=45)
+
+        ax7.set_title("Power Output")
+
+        ax7.plot(dates_input, power_input, label = f"Power output ({power_unit})")
+        ax7.set_ylabel(f"Power Output ({power_unit})")
+        ax7.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax7.tick_params( axis = 'x', rotation = 45)
+
+        fig.tight_layout()
+
+        filename = f"{variable_key1}_{variable_key2}_{variable_key3}_{year}_{month}.png"
+        fig.savefig(filename)
+
+        print(f"Graph saved as {filename}")
+        print(f"In workbook, run")
+        print(f"from IPython.display import Image")
+        print(f"Image(filename='{filename}')")
+
+        plt.close()
+
+    
+
+
 
 
 years = ["2024","2025","2026"]
@@ -470,6 +740,10 @@ years = ["2024","2025","2026"]
 months = list(range(1, 13))
 
 if __name__ == '__main__':
+
+    import numpy as np 
+    import datetime as datetime
+
     weather_files = "/work/scientific_programming_rosaliehelgeland/python/project/data/2026-kenosha-regional-airport-weather-data.csv"
 
     solar_file = "/work/scientific_programming_rosaliehelgeland/python/project/data/daily_solar_data_2026.csv"
@@ -536,12 +810,12 @@ if __name__ == '__main__':
     #SOLAR DATA
 
     average_irradiance_dates, average_irradiance_values = compute_daily_average_values(solar_times, actual_irradiance)
-    ideal_irradiance_dates, ideal_irradiance_values = compute_daily_average_daily_values(solar_times, ideal_irradiances)
+    ideal_irradiance_dates, ideal_irradiance_values = compute_daily_average_values(solar_times, ideal_irradiances)
 
     #WEATHER DATA
 
     rain = weather_data["Precipitation"]
-    rain_dates, average_rain = compute_daily_average_daily_values(weather_times, rain)
+    rain_dates, average_rain = compute_daily_average_values(weather_times, rain)
 
     #SITE DATA
 
@@ -549,7 +823,7 @@ if __name__ == '__main__':
     humidity_dates, average_humidity = compute_daily_average_values(site_times, humidity)
 
     temperature = site_data["Weather station ambient temperature Degrees Fahrenheit"]
-    temperature_dates, average_temperatures = compute_daily_average_daily_values(site_times, temperature)
+    temperature_dates, average_temperatures = compute_daily_average_values(site_times, temperature)
     
 
     power_output = site_data["Production meter active power Kilowatts"]
@@ -595,4 +869,8 @@ if __name__ == '__main__':
 
     months = list(range(1, 13))
 
-    graph_datasets(years[2], months[1], "humidity", "real_irradiance", "power_output")
+    #graph_datasets(years[2], months[1], "humidity", "real_irradiance", "power_output")
+
+    #dates, irradiance, power, rain_test, humidity_test, temperature_test = find_graphable_data(years[2], months[1], "real_irradiance", "power_output", "rain", "humidity", "temperatures")
+
+    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "humidity")
