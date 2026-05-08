@@ -548,13 +548,13 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
     power_unit = all_data[power_key]["unit"]
 
     def graph_weather1(dates, irradiances, weather1):
-        ax1.set_title(f"{variable_key1.capitalize()} vs. Irradiance")
+        ax[0].set_title(f"{variable_key1.capitalize()} vs. Irradiance")
 
-        line1, = ax1.plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
-        ax1.set_ylabel(f"Irradiance ({irradiance_unit})")
+        line1, = ax[0].plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
+        ax[0].set_ylabel(f"Irradiance ({irradiance_unit})")
 
-        line2, = ax2.plot(dates, weather1, label = f"{variable_key1.capitalize()} ({weather1_unit})", color = 'orange')
-        ax2.set_ylabel(f"{variable_key1.capitalize()} ({weather1_unit})")
+        line2, = first_shared_axes.plot(dates, weather1, label = f"{variable_key1.capitalize()} ({weather1_unit})", color = 'orange')
+        first_shared_axes.set_ylabel(f"{variable_key1.capitalize()} ({weather1_unit})")
 
 
         lines = [line1, line2]
@@ -562,67 +562,73 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
 
         fig.subplots_adjust(right=0.75)
 
-        ax1.legend(lines, labels, loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax[0].legend(lines, labels, loc = 'upper left', bbox_to_anchor=(1.055, 1))
         #ax1.legend(lines, labels, loc = 'upper right', bbox_to_anchor=(1.01, 1))
-        ax1.tick_params(axis='x', rotation=45)
+        ax[0].tick_params(axis='x', rotation=45)
 
     def graph_weather2(dates, irradiances, weather2):
-        ax3.set_title(f"{variable_key2.capitalize()} vs. Irradiance")
+        ax[2].set_title(f"{variable_key2.capitalize()} vs. Irradiance")
 
-        line1, = ax3.plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
-        ax3.set_ylabel(f"Irradiance ({irradiance_unit})")
+        print(irradiances)
 
-        line2, = ax4.plot(dates, weather2, label = f"{variable_key2.capitalize()} ({weather2_unit})", color = 'lime')
-        ax4.set_ylabel(f"{variable_key2.capitalize()} ({weather2_unit})")
+        line1, = ax[2].plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
+        ax[2].set_ylabel(f"Irradiance ({irradiance_unit})")
+
+        line2, = second_shared_axis.plot(dates, weather2, label = f"{variable_key2.capitalize()} ({weather2_unit})", color = 'lime')
+        second_shared_axis.set_ylabel(f"{variable_key2.capitalize()} ({weather2_unit})")
 
         lines = [line1, line2]
         labels = [line.get_label() for line in lines]
 
         fig.subplots_adjust(right=0.75)
         
-        ax3.legend(lines, labels, loc = 'upper left', bbox_to_anchor=(1.055, 1))
-        ax3.tick_params(axis='x', rotation=45)
+        ax[2].legend(lines, labels, loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax[2].tick_params(axis='x', rotation=45)
+
+        
     
-    def graph_correlation(irradiance, weather, weather_key, weather_unit):
-        ax_corr.scatter(weather, irradiance)
+
+    def graph_correlation(irradiance, weather, weather_key, weather_unit, axis_index):
+        ax[axis_index].scatter(weather, irradiance)
 
         coefficients= np.polyfit(weather, irradiance, 1)
         trend = np.poly1d(coefficients)
 
         indices = np.argsort(weather)
-        ax_corr.plot(weather[indices], trend(weather[indices]), color='red', linestyle='--', label="Trendline")
-        ax_corr.set_xlabel(f"{weather_key.capitalize()} ({weather_unit})")
-        ax_corr.set_ylabel(f"Irradiance ({irradiance_unit})")
+        ax[axis_index].plot(weather[indices], trend(weather[indices]), color='red', linestyle='--', label="Trendline")
+        ax[axis_index].set_xlabel(f"{weather_key.capitalize()} ({weather_unit})")
+        ax[axis_index].set_ylabel(f"Irradiance ({irradiance_unit})")
 
         correlation = compute_correlation(weather, irradiance)
 
-        ax_corr.set_title(f"{weather_key.capitalize()} vs Irradiance Correlation: r = {correlation:.3f}")
-        ax_corr.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax[axis_index].set_title(f"{weather_key.capitalize()} vs Irradiance Correlation: r = {correlation:.3f}")
+        ax[axis_index].legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        print(f'graphing coorelation on ax[{axis_index}]')
 
     if variable_key2 == None and variable_key3 == None:
 
         dates_input, irradiance_input, power_input, weather_input1 = find_graphable_data(year, month, irradiance_key, power_key, variable_key1)
 
-        fig, (ax1, ax_corr, ax3) = plt.subplots(
+        fig, ax = plt.subplots(
             3, 1, 
             figsize=(12.5, 10),
             gridspec_kw={"height_ratios": [2, 2, 2]}
             )
-        ax2 = ax1.twinx()
+        first_shared_axes = ax[0].twinx()
 
         fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x=0.39,fontsize=16)
 
         graph_weather1(dates_input, irradiance_input, weather_input1)
 
-        graph_correlation(irradiance_input, weather_input1, variable_key1, weather1_unit)
+        graph_correlation(irradiance_input, weather_input1, variable_key1, weather1_unit, 1)
 
-        ax3.set_title("Power Output")
+        ax[2].set_title("Power Output")
 
-        ax3.plot(dates_input, power_input, label = f"Power output {power_unit}")
-        ax3.set_ylabel(f"Power Output {power_unit}")
+        ax[2].plot(dates_input, power_input, label = f"Power output {power_unit}")
+        ax[2].set_ylabel(f"Power Output {power_unit}")
 
-        ax3.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
-        ax3.tick_params(axis = 'x', rotation=45)
+        ax[2].legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax[2].tick_params(axis = 'x', rotation=45)
 
         fig.tight_layout()
 
@@ -642,24 +648,35 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
 
         weather2_unit = all_data[variable_key2]["unit"]
 
-        fig, (ax1, ax3, ax5) = plt.subplots(3, figsize=(12.5, 9.75))
-        ax2 = ax1.twinx()
+        fig, ax = plt.subplots(
+            5, figsize=(12.5, 16.6),
+            gridspec_kw={"height_ratios":[2, 2, 2, 2, 2]}
+        )
+        first_shared_axes = ax[0].twinx()
 
         fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x=0.39, fontsize=16)
 
         graph_weather1(dates_input, irradiance_input, weather_input1)
 
-        ax4 = ax3.twinx()
+        graph_correlation(irradiance_input, weather_input1, variable_key1, weather1_unit, 1)
+
+        print(irradiance_input)
+
+        second_shared_axis = ax[2].twinx()
 
         graph_weather2(dates_input, irradiance_input, weather_input2)
 
-        ax5.set_title("Power Output")
+        print(irradiance_input)
 
-        ax5.plot(dates_input, power_input, label = f"Power output {power_unit}")
-        ax5.set_ylabel(f"Power Output ({power_unit})")
+        graph_correlation(irradiance_input, weather_input2, variable_key2, weather2_unit, 3)
 
-        ax5.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
-        ax5.tick_params(axis='x', rotation = 45)
+        ax[4].set_title("Power Output")
+
+        ax[4].plot(dates_input, power_input, label = f"Power output {power_unit}")
+        ax[4].set_ylabel(f"Power Output ({power_unit})")
+
+        ax[4].legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax[4].tick_params(axis='x', rotation = 45)
 
         fig.tight_layout()
 
@@ -685,43 +702,57 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
         weather2_unit = all_data[variable_key2]["unit"]
         weather3_unit = all_data[variable_key3]["unit"]
 
-        fig, (ax1, ax3, ax5, ax7) = plt.subplots(4, figsize=(12.5, 15))
+        fig, ax = plt.subplots(
+            7, figsize=(12.5, 23.24),
+            gridspec_kw = {"height_ratios":[2, 2, 2, 2, 2, 2, 2]}
+            )
 
-        fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x = 0.39, fontsize=16)
+        fig.suptitle(f'Monthly Weather/Irradiance Data and Power Output', x = 0.39, y=0.995, fontsize=16)
 
-        ax2 = ax1.twinx()
+        first_shared_axes = ax[0].twinx()
         graph_weather1(dates_input, irradiance_input, weather_input1)
 
-        ax4 = ax3.twinx()
+        graph_correlation(irradiance_input, weather_input1, variable_key1, weather1_unit, 1)
+
+
+        second_shared_axis = ax[2].twinx()
+
         graph_weather2(dates_input, irradiance_input, weather_input2)
 
-        ax6 = ax5.twinx()
+        graph_correlation(irradiance_input, weather_input2, variable_key2, weather2_unit, 3)
 
-        ax5.set_title(f"{variable_key3.capitalize()} vs Irradiance")
 
-        line1, = ax5.plot(dates_input, irradiance_input, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
-        ax5.set_ylabel(f"Irradiance ({irradiance_unit})")
+        last_shared_axis = ax[4].twinx()
 
-        line2, = ax6.plot(dates_input, weather_input3, label = f"{variable_key3.capitalize()} ({weather3_unit})", color = (0/255, 128/255, 255/255))
-        ax6.set_ylabel(f"{variable_key3.capitalize()} ({weather3_unit})")
+        ax[4].set_title(f"{variable_key3.capitalize()} vs Irradiance")
+
+        line1, = ax[4].plot(dates_input, irradiance_input, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
+        ax[4].set_ylabel(f"Irradiance ({irradiance_unit})")
+
+        line2, = last_shared_axis.plot(dates_input, weather_input3, label = f"{variable_key3.capitalize()} ({weather3_unit})", color = (0/255, 128/255, 255/255))
+
+        last_shared_axis.set_ylabel(f"{variable_key3.capitalize()} ({weather3_unit})")
 
         lines = [line1, line2]
         labels = [line.get_label() for line in lines]
 
-        ax5.legend(lines, labels, loc='upper left', bbox_to_anchor=(1.055, 1))
-        ax5.tick_params(axis = 'x', rotation=45)
+        ax[4].legend(lines, labels, loc='upper left', bbox_to_anchor=(1.055, 1))
+        ax[4].tick_params(axis = 'x', rotation=45)
 
-        ax7.set_title("Power Output")
+        graph_correlation(irradiance_input, weather_input3, variable_key3, weather3_unit, 5)
 
-        ax7.plot(dates_input, power_input, label = f"Power output ({power_unit})")
-        ax7.set_ylabel(f"Power Output ({power_unit})")
-        ax7.legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
-        ax7.tick_params( axis = 'x', rotation = 45)
+        ax[6].set_title("Power Output")
 
-        fig.tight_layout()
+        ax[6].plot(dates_input, power_input, label = f"Power output ({power_unit})")
+        ax[6].set_ylabel(f"Power Output ({power_unit})")
+        ax[6].legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
+        ax[6].tick_params( axis = 'x', rotation = 45)
+
+        fig.tight_layout(rect=[0,0,0.78,0.96])
+        fig.subplots_adjust(hspace=0.65)
 
         filename = f"{variable_key1}_{variable_key2}_{variable_key3}_{year}_{month}.png"
-        fig.savefig(filename)
+        fig.savefig(filename, bbox_inches="tight")
 
         print(f"Graph saved as {filename}")
         print(f"In workbook, run")
@@ -873,4 +904,4 @@ if __name__ == '__main__':
 
     #dates, irradiance, power, rain_test, humidity_test, temperature_test = find_graphable_data(years[2], months[1], "real_irradiance", "power_output", "rain", "humidity", "temperatures")
 
-    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "humidity")
+    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "temperatures", "humidity", "rain")
