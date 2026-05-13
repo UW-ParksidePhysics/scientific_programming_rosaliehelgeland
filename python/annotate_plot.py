@@ -51,7 +51,7 @@ def annotate_plot(annotations: dict) -> list:
                 fontsize = fontsize
             )
 
-        annotate_objects.append(annotation)
+            annotate_objects.append(annotation)
 
         return annotate_objects
     except KeyError as error:
@@ -65,13 +65,14 @@ if __name__ == "__main__":
 
     today = date.today().isoformat()
     
+    
     annotations = {
         f"Created by Rosie Helgeland on {today}": {
             "position": np.array([1, -10]),
             "alignment": ("left", "top"),
             "fontsize": 10
-            
         }
+        f"
     }
 
     annotate_plot(annotations)

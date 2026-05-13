@@ -569,7 +569,7 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
     def graph_weather2(dates, irradiances, weather2):
         ax[2].set_title(f"{variable_key2.capitalize()} vs. Irradiance")
 
-        print(irradiances)
+        #print(irradiances)
 
         line1, = ax[2].plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
         ax[2].set_ylabel(f"Irradiance ({irradiance_unit})")
@@ -603,7 +603,7 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
 
         ax[axis_index].set_title(f"{weather_key.capitalize()} vs Irradiance Correlation: r = {correlation:.3f}")
         ax[axis_index].legend(loc = 'upper left', bbox_to_anchor=(1.055, 1))
-        print(f'graphing coorelation on ax[{axis_index}]')
+        #print(f'graphing coorelation on ax[{axis_index}]')
 
     if variable_key2 == None and variable_key3 == None:
 
@@ -904,4 +904,4 @@ if __name__ == '__main__':
 
     #dates, irradiance, power, rain_test, humidity_test, temperature_test = find_graphable_data(years[2], months[1], "real_irradiance", "power_output", "rain", "humidity", "temperatures")
 
-    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "temperatures", "humidity", "rain")
+    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "temperatures", "humidity")
