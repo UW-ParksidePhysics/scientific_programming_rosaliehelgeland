@@ -6,12 +6,17 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from datetime import date
 from scipy import constants
+
+#fit an equation of state
 from read_two_columns_text import read_two_columns_text
 from calculate_bivariate_statistics import calculate_bivariate_statistics
 from calculate_quadratic_fit import calculate_quadratic_fit
 from equations_of_state import fit_equation_of_state, murnaghan, birch_murnaghan, vinet
 from annotate_plot import annotate_plot
 
+#visualize vectors in space
+from generate_matrix import generate_matrix
+from calculate_lowest_eigenvectors import calculate_lowest_eigenvectors
 
 #PARAMETERS
 
@@ -27,8 +32,26 @@ test_data_path = "/work/scientific_programming_rosaliehelgeland/python/Si.Fd-3m.
 
 test_file_name = "Si.Fd-3m.GGA-PBE.volumes_energies.dat"
 
+#visualize vectors in graph
+
+minimum_x = -10
+maximum_x = 10
+
+potential_name = 'sinusoidal'
+
+number_of_dimensions = 110
+
+potential_parameter = 3
+
+eigenfunctions = [0, 1, 2]
+
+plot_colors = ['orange', 'cyan', 'lime']
+
+
 #FUNCTIONS
 
+
+#parse file name
 
 def parse_file_name(file_name):
 
@@ -43,6 +66,7 @@ def parse_file_name(file_name):
     return chemical_symbol, crystal_symmetry_symbol, density_functional_exchange_acronym
 
 
+#convert units
 
 def convert_units(value, starting_unit, desired_unit):
     """
@@ -184,11 +208,11 @@ if __name__ == '__main__':
 
     formatted_symmetry = crystal_symmetry_symbol.replace("-3", r"\bar{3}")
 
-    annotations = {
+    fit_annotations = {
         f"{chemical_symbol}":{
             "position": np.array([x_left, y_top]),
             "alignment": ("left", "top"),
-            "fontsize": 10
+            "fontsize": 10        
         },
 
         f"${formatted_symmetry}$":{
@@ -196,7 +220,7 @@ if __name__ == '__main__':
             "alignment": ("center", "bottom"),
             "fontsize": 10
         },
-    
+        
         f"$K_0$ = {converted_bulk_modulus:.1f} GPa":{
             "position": np.array([x_center, y_curve_top + 0.05 * energy_range]),
             "alignment": ("center", "bottom"),
@@ -208,10 +232,9 @@ if __name__ == '__main__':
             "alignment": ("left", "bottom"),
             "fontsize": 10
         }
-    
     }
 
-    annotate_plot(annotations)
+    annotate_plot(fit_annotations)
 
     ax.set_title(f"Vinet Equation of State for {chemical_symbol} in DFT {density_functional_exchange_acronym}", pad = 15)
 
@@ -220,4 +243,57 @@ if __name__ == '__main__':
     if display_graph:
         plt.show()
     else:
-        plt.savefig(f"Helgeland.{chemical_symbol}.{crystal_symmetry_symbol}.{density_functional_exchange_acronym}.{equation_of_state}EquationOfState.png", bbox_inches = "tight")
+        plt.savefig(f"Helgeland.{chemical_symbol}.{crystal_symmetry_symbol}.{density_functional_exchange_acronym}.{equation_of_state.capitalize()}EquationOfState.png", bbox_inches = "tight")
+    
+    #matrices 
+
+    generated_matrix = generate_matrix(minimum_x, maximum_x, number_of_dimensions, potential_name, potential_parameter)
+
+    eigenvalues, eigenvectors = calculate_lowest_eigenvectors(generated_matrix)
+
+    x_values = np.linspace(minimum_x, maximum_x, number_of_dimensions)
+
+    #print(eigenvectors)
+    #print(eigenvalues)
+
+    maximum_eigenvector_components = np.max(
+        np.abs(eigenvectors[eigenfunctions, :])
+    )
+
+    fig1, ax1 = plt.subplots(figsize=(9, 6))
+
+    for index, color in zip(eigenfunctions, plot_colors):
+        vectors = eigenvectors[index, :]
+        values = eigenvalues[index]
+
+        ax1.plot( x_values, vectors, color=color, label=fr"$\psi_{index}$, $E_{index}$ = {values:.3f} a.u.")
+    
+    ax1.set_ylim(-2 * maximum_eigenvector_components, 2* maximum_eigenvector_components)
+    ax1.axhline(0, color = 'black')
+
+    y_minimum, y_maximum = ax1.get_ylim()
+    y_range = y_maximum - y_minimum
+
+    x_minimum, x_maximum = ax1.get_xlim()
+    x_range = x_maximum - x_minimum
+
+
+    array_annotations = {
+        f"Created by Rosie Helgeland on {today}":{
+            "position": np.array([x_minimum, y_minimum - 0.15 * y_range]),
+            "alignment": ("left", "bottom"),
+            "fontsize": 10
+        }
+    }
+
+    annotate_plot(array_annotations)
+
+    ax1.set_title(f"Select Wavefunctions for a {potential_name.capitalize()} Potential on a Spacial Grid of {number_of_dimensions} Points")
+
+    ax1.legend()
+    fig1.tight_layout()
+
+    if display_graph:
+        fig1.show()
+    else:
+        fig1.savefig(f"Helgeland.{potential_name}.Eigenvector{potential_parameter}.png")
