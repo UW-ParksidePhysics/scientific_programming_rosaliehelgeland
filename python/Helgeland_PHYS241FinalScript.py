@@ -268,6 +268,9 @@ if __name__ == '__main__':
 
         ax1.plot( x_values, vectors, color=color, label=fr"$\psi_{index}$, $E_{index}$ = {values:.3f} a.u.")
     
+    ax1.set_xlabel(fr"$\psi_{index}$")
+    ax1.set_ylabel(fr"$E_{index}$ = {values:.3f} a.u.")
+    
     ax1.set_ylim(-2 * maximum_eigenvector_components, 2* maximum_eigenvector_components)
     ax1.axhline(0, color = 'black')
 
