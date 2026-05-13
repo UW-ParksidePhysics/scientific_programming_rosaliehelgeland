@@ -72,7 +72,7 @@ if __name__ == "__main__":
             "alignment": ("left", "top"),
             "fontsize": 10
         }
-        f"
+        
     }
 
     annotate_plot(annotations)
