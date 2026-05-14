@@ -1,123 +1,36 @@
-#### RENAME THIS FILE
-# Rename `project.py` to `(your_project_short_name).py`
-# Example: `orbit_simulation.py`, `wave_packet.py`, `two_body_problem.py`
+"""
+Pulls data from weather CSV files and solar panel data from CSV files and organizes them into multiple data arrays
+that store dates and given data. 
+Uses data arrays to compute needed solar geometry variables. 
+Filters arrays by amount needed for graphing (monthly, yearly)
+Uses filtered data in a graphing function that returns multiple stacked graphs. 
+"""
 
-# -----------------------------------------------------------------------------
-# PROJECT FILE STRUCTURE (CONTEMPORARY PYTHON BEST PRACTICES)
-# -----------------------------------------------------------------------------
-# The goal is clarity, testability, and “import safety” (importing your module
-# should NOT start the simulation or pop up plots).
-#
-# Recommended top-to-bottom order:
-# 1) Module docstring (100–200 words): what the project does, key assumptions,
-#    inputs/outputs, and how to run it.
-# 2) Imports (grouped per PEP 8).
-# 3) Module-level constants (only if truly global and stable).
-# 4) Function definitions (each with a PEP 257-compliant docstring).
-# 5) main() function: the single clear entry point for running the program.
-# 6) Script guard: if __name__ == "__main__": main()
-#
-# References:
-# - PEP 8 (imports and general style): https://peps.python.org/pep-0008/  (see “Imports”)
-# - SciPy physical constants (use inside functions when appropriate):
-#   https://docs.scipy.org/doc/scipy/reference/constants.html
-#
-# -----------------------------------------------------------------------------
-# IMPORTS: ORDER + PRACTICES (PEP 8)
-# -----------------------------------------------------------------------------
-# Put imports at the top, after the module docstring, before constants.
-# Group imports in THIS order, separated by blank lines:
-#   1) Standard library imports (e.g., math, pathlib, dataclasses)
-#   2) Third-party imports (e.g., numpy, scipy, matplotlib, plotly)
-#   3) Local/project imports (your own modules in this repo/package)
+import numpy as np
+import datetime as datetime
 
 
 
+#------------------------------------------------------------------------------
+#PARAMETERS 
+#------------------------------------------------------------------------------
+
+weather_files = "/work/scientific_programming_rosaliehelgeland/python/project/data/2026-kenosha-regional-airport-weather-data.csv"
+
+solar_file = "/work/scientific_programming_rosaliehelgeland/python/project/data/daily_solar_data_2026.csv"
+
+site_file = "/work/scientific_programming_rosaliehelgeland/python/project/data/2026-power-irradiance-weather.csv"
 
 
+years = ["2024","2025","2026"]
 
-#
-# Examples:
-#   # 1) Standard library
-#   from __future__ import annotations
-#   from dataclasses import dataclass
-#   from pathlib import Path
-#
-#   # 2) Third-party
-#   import numpy as np
-#   from scipy import constants as scipy_constants
-#
-#   # 3) Local imports (if your project is a package)
-#   # from .helpers import integrate
-#
-# Avoid:
-# - wildcard imports: `from module import *`
-# - hiding heavy work at import time (reading big files / launching plots)
-#
-# -----------------------------------------------------------------------------
-# SIMULATION / VISUALIZATION FUNCTIONS (FUNCTIONAL STYLE)
-# -----------------------------------------------------------------------------
-# Keep “work” inside functions. This makes your code testable and reusable.
-#
-# Typical breakdown:
-# - read_data(...): load/validate input data
+months = list(range(1, 13))
 
-#file locations stored in tuple
-# - compute_derived_parameters(...): compute values that depend on inputs
-# - simulate(...): compute arrays / time series (no plotting)
-# - build_figure(...): create a plot/animation object (no file I/O)
-# - save_outputs(...): optional, write files if required
-#
-# Each function must have:
-# - clear, full-word parameter names (PEP 8: lower_case_with_underscores)
-# - units in comments or docstrings (meters, seconds, kg, etc.)
-# - a docstring describing: parameters, returns, and assumptions
-#
-# -----------------------------------------------------------------------------
-# SciPy CONSTANTS: WHERE TO USE THEM
-# -----------------------------------------------------------------------------
-# Prefer importing SciPy constants inside the function that uses them, so the
-# dependency is obvious and to keep module import fast/lightweight.
-#
-# Example pattern (inside a function):
-#   from scipy import constants as scipy_constants
-#   speed_of_light = scipy_constants.c
-#
-# Docs: https://docs.scipy.org/doc/scipy/reference/constants.html
-#
-# -----------------------------------------------------------------------------
-# main(): THE STANDARD ENTRY POINT
-# -----------------------------------------------------------------------------
-# It is now standard practice to put the “run the program” logic in a main()
-# function and call it under the script guard. This prevents side effects when
-# importing your module.
-#
-# Skeleton:
-#   def main() -> None:
-#       """Run the simulation and display/save results."""
-#       # 1) Define simulation parameters (with units)
-#       # 2) Compute derived parameters
-#       # 3) Call read_data / simulate / build_figure
-#       # 4) Show or save outputs
-#
-#   if __name__ == "__main__":
-#       main()
-#
-# -----------------------------------------------------------------------------
-# PRIMARY SIMULATION FUNCTION STRUCTURE (SUGGESTED)
-# -----------------------------------------------------------------------------
-# Inside your primary simulation function (often called by main()):
-# 1) Parameters (named clearly, units documented)
-# 2) Derived parameters (computed from inputs)
-# 3) Call helpers for:
-#    - data read-in / validation
-#    - simulation computation
-#    - visualization creation
-# 4) Return results (arrays, figure objects) instead of printing everything
-#
-# Keep plotting separate from physics/math wherever INGr_.(i)ntEDees ng NCON 
+latitude = np.radians(42.647228)
 
-
+#------------------------------------------------------------------------------
+# FUNCTIONS 
+#------------------------------------------------------------------------------
 
 def create_data_array(file_location):
     """
@@ -126,8 +39,6 @@ def create_data_array(file_location):
     stores arrays in dictionaries 
     """
 
-    import numpy as np
-    import datetime as datetime
     from datetime import datetime
     from astropy.time import Time
 
@@ -200,24 +111,10 @@ def create_data_array(file_location):
     return times, values, headings
             
 
-#-------------------------------------------------------------------------
-#DECIMAL TO TIME FUNCTION
-
-def convert_decimals_to_time(arr):
-    import numpy as np
-
-    arr = np.mod(arr, 24)
-
-    hours = np.floor(arr).astype(int)
-    minutes = np.floor((arr-hours)*60).astype(int)
-
-    vectorized = np.vectorize(lambda h, m: f'{h:02d}:{m:02d}')
-
-    return vectorized(hours, minutes)
-
-
 #-------------------------------------------------------------------------------
 #STORING DATA NEEDED FOR GRAPHING AS SEPERATE ARRAYS 
+#------------------------------------------------------------------------------
+
 
 def pull_and_store_data(values, headings, name, default = None):
     """
@@ -239,13 +136,11 @@ def pull_and_store_data(values, headings, name, default = None):
     return default
     
 
-#----------------------------------------------------------------------------
-
+#------------------------------------------------------------------------------
 #calculating and storing solar geometry constants
-
+#------------------------------------------------------------------------------
 
 def calculate_equation_of_time(N):
-    import numpy as np
 
     B = np.radians((360/364.)*(N-81))
 
@@ -256,13 +151,13 @@ def calculate_equation_of_time(N):
 
 
 def calculate_hour_angles(solar_time_hours):
-    import numpy as np
+ 
     return np.radians(15*(solar_time_hours - 12))
 
 
 
 def calculate_declination_angles(n):
-    import numpy as np
+ 
 
     return np.radians(
         23.45 * np.sin(np.radians((360/365)*  (284 + n)))
@@ -271,7 +166,7 @@ def calculate_declination_angles(n):
 
 
 def calculate_solar_altitudes(declination_angle, hour_angle, latitude):
-    import numpy as np
+
     SA = np.arcsin(
         np.sin(declination_angle) * np.sin(latitude) + 
         np.cos(declination_angle) * np.cos(latitude) * np.cos(hour_angle)
@@ -280,7 +175,7 @@ def calculate_solar_altitudes(declination_angle, hour_angle, latitude):
 
 
 def calculate_solar_zenith_angles(altitude):
-    import numpy as np
+  
     ZA = np.pi/2 - altitude
 
     return ZA
@@ -289,7 +184,7 @@ def calculate_solar_zenith_angles(altitude):
 #CALCULATING IDEAL IRRADIANCE/POWER
 
 def calculate_ideal_irradiances(altitude, I0=1361):
-    import numpy as np
+  
     IR = I0 * np.maximum(np.sin(altitude), 0)
 
     return IR
@@ -297,8 +192,6 @@ def calculate_ideal_irradiances(altitude, I0=1361):
 
 
 def compute_daily_average_daily_values(times, values):
-    import numpy as np
-    import datetime as datetime
 
     datetimes = times.to_datetime()
 
@@ -320,6 +213,8 @@ def compute_daily_average_daily_values(times, values):
 
 #-----------------------------------------------------------------------------------------
 # DEVELOPING FUNCTIONS TO PREVENT GRAPHING BUGS!!!!!!!!!
+#------------------------------------------------------------------------------
+
 def compute_daily_average_values(times, values):
     """
     calculates daily average for data with hourly sets and makes
@@ -327,8 +222,6 @@ def compute_daily_average_values(times, values):
     stores averages in a list and then converts the list
     to an array for easy graphing
     """
-    import numpy as np 
-    import datetime as datetime
 
     datetimes = times.to_datetime()
 
@@ -375,16 +268,11 @@ def align_different_datasets_by_time(time_set1, time_set2, data_set1, data_set2)
 
     return aligned_times, aligned_values1, aligned_values2
 
-def normalize_arrays(arr):
-    min_val = np.nanmin(arr)
-    max_val = np.nanmax(arr)
-
-    if max_val == min_val:
-        return arr
-
-    return (arr-min_val) / (max_val-min_val)
 
 def align_three_sets_of_data(date_1, date_2, date_3, values_1, values_2, values_3):
+    """
+    aligns three sets of data so that dates are shares
+    """
     common_dates = np.intersect1d(np.intersect1d(date_1, date_2), date_3)
 
     frame_1 = np.isin(date_1, common_dates)
@@ -399,6 +287,9 @@ def align_three_sets_of_data(date_1, date_2, date_3, values_1, values_2, values_
     )
 
 def align_four_sets_of_data(date_1, date_2, date_3, date_4, values_1, values_2, values_3, values_4):
+    """
+    aligns four seperate sets of data so that dates are shared
+    """
     common_dates = np.intersect1d(
         np.intersect1d(date_1, date_2),
         np.intersect1d(date_3, date_4)
@@ -418,6 +309,9 @@ def align_four_sets_of_data(date_1, date_2, date_3, date_4, values_1, values_2, 
     )
 
 def align_all_data(date_1, date_2, date_3, date_4, date_5, values_1, values_2, values_3, values_4, values_5):
+    """
+    aligns all data so that dates are shared 
+    """
     common_dates = np.intersect1d(
         np.intersect1d(
             np.intersect1d(date_1, date_2), 
@@ -441,16 +335,15 @@ def align_all_data(date_1, date_2, date_3, date_4, date_5, values_1, values_2, v
     )
 #---------------------------------------------------------------------------------------------------------
 
-def get_aligned_data(variable1, variable2):
-    set1 = all_data[variable1]
-    set2 = all_data[variable2]
-
-    return align_different_datasets_by_time(set1["dates"], set2["dates"], set1["values"], set2["values"])
 
 #use np.corrcoef to compute coorelation. store r values and graph them. (dotted line with first graph (color indigo or red/purple mustard?))
 
 def find_graphable_data(year, month, irradiance_key, power_key, variable_key1, variable_key2 = None, variable_key3 = None):
-    import numpy as np
+    """
+    finds data asked for by graphing function, filters based on how many keys are present in the call
+    alignes data to dates asked for by the above filtering functions, allows for graphs to be
+    stackable with desired data called in the graphing function 
+    """
 
     irradiance_dates = all_data[irradiance_key]["dates"]
     irradiance_values = all_data[irradiance_key]["values"]
@@ -535,12 +428,17 @@ def find_graphable_data(year, month, irradiance_key, power_key, variable_key1, v
 
 
 def compute_correlation(weather, irr):
-    import numpy as np
+    """
+    finds the correlation value for graphing 
+    """
     r = np.corrcoef(weather, irr)[0, 1]
     return r
 
 
 def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variable_key2 = None, variable_key3 = None):
+    """
+    graphs datasets asked for, filters based on keys
+    """
     import matplotlib.pyplot as plt 
 
     irradiance_unit = all_data[irradiance_key]["unit"]
@@ -660,13 +558,13 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
 
         graph_correlation(irradiance_input, weather_input1, variable_key1, weather1_unit, 1)
 
-        print(irradiance_input)
+        #print(irradiance_input)
 
         second_shared_axis = ax[2].twinx()
 
         graph_weather2(dates_input, irradiance_input, weather_input2)
 
-        print(irradiance_input)
+        #print(irradiance_input)
 
         graph_correlation(irradiance_input, weather_input2, variable_key2, weather2_unit, 3)
 
@@ -764,23 +662,7 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
     
 
 
-
-
-years = ["2024","2025","2026"]
-
-months = list(range(1, 13))
-
 if __name__ == '__main__':
-
-    import numpy as np 
-    import datetime as datetime
-
-    weather_files = "/work/scientific_programming_rosaliehelgeland/python/project/data/2026-kenosha-regional-airport-weather-data.csv"
-
-    solar_file = "/work/scientific_programming_rosaliehelgeland/python/project/data/daily_solar_data_2026.csv"
-
-    site_file = "/work/scientific_programming_rosaliehelgeland/python/project/data/2026-power-irradiance-weather.csv"
-
 
 
     solar_times, solar_values, solar_headings = create_data_array(solar_file)
@@ -840,25 +722,25 @@ if __name__ == '__main__':
 
     #SOLAR DATA
 
-    average_irradiance_dates, average_irradiance_values = compute_daily_average_values(solar_times, actual_irradiance)
-    ideal_irradiance_dates, ideal_irradiance_values = compute_daily_average_values(solar_times, ideal_irradiances)
+    average_irradiance_dates, average_irradiance_values = compute_daily_average_values(solar_times, actual_irradiance) #daily values, W/m^2
+    ideal_irradiance_dates, ideal_irradiance_values = compute_daily_average_values(solar_times, ideal_irradiances) # daily values, W/m^2
 
     #WEATHER DATA
 
     rain = weather_data["Precipitation"]
-    rain_dates, average_rain = compute_daily_average_values(weather_times, rain)
+    rain_dates, average_rain = compute_daily_average_values(weather_times, rain) #daily values, in
 
     #SITE DATA
 
-    humidity = site_data["Weather station Humidity Relative humidity (%)"]
+    humidity = site_data["Weather station Humidity Relative humidity (%)"] #% relative humidity
     humidity_dates, average_humidity = compute_daily_average_values(site_times, humidity)
 
-    temperature = site_data["Weather station ambient temperature Degrees Fahrenheit"]
-    temperature_dates, average_temperatures = compute_daily_average_values(site_times, temperature)
+    temperature = site_data["Weather station ambient temperature Degrees Fahrenheit"] #degrees fahrenheit
+    temperature_dates, average_temperatures = compute_daily_average_values(site_times, temperature) #daily values, degrees fahrenheit
     
 
-    power_output = site_data["Production meter active power Kilowatts"]
-    power_dates, average_power = compute_daily_average_values(site_times, power_output)
+    power_output = site_data["Production meter active power Kilowatts"] 
+    power_dates, average_power = compute_daily_average_values(site_times, power_output) #daily values, kilowatts
 
     
     all_data = {
