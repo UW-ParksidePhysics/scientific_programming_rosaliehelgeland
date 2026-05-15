@@ -7,7 +7,7 @@
 * clean up the code by removing equations that arent being used, add headers and seperate code in different modules. 
 * make sure that graph is properly labeled with units in headings and key
 ## Functionality
-* call outside libraries in modules and not over the whole project
+* call outside libraries in modules and not over the whole project (if needed)
 ## Visualization and Communication
 * fix graph key so that it isn't overlapping the data 
 * make graphs stackable (again) 

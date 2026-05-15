@@ -141,6 +141,9 @@ def pull_and_store_data(values, headings, name, default = None):
 #------------------------------------------------------------------------------
 
 def calculate_equation_of_time(N):
+    """
+    calculates equation of time
+    """
 
     B = np.radians((360/364.)*(N-81))
 
@@ -151,13 +154,18 @@ def calculate_equation_of_time(N):
 
 
 def calculate_hour_angles(solar_time_hours):
+    """
+    calculates hour angles
+    """
  
     return np.radians(15*(solar_time_hours - 12))
 
 
 
 def calculate_declination_angles(n):
- 
+    """
+    calculates declination angles
+    """
 
     return np.radians(
         23.45 * np.sin(np.radians((360/365)*  (284 + n)))
@@ -166,6 +174,9 @@ def calculate_declination_angles(n):
 
 
 def calculate_solar_altitudes(declination_angle, hour_angle, latitude):
+    """
+    calculates solar altitudes
+    """
 
     SA = np.arcsin(
         np.sin(declination_angle) * np.sin(latitude) + 
@@ -175,6 +186,9 @@ def calculate_solar_altitudes(declination_angle, hour_angle, latitude):
 
 
 def calculate_solar_zenith_angles(altitude):
+    """
+    calculates solar zenith angles
+    """
   
     ZA = np.pi/2 - altitude
 
@@ -184,6 +198,9 @@ def calculate_solar_zenith_angles(altitude):
 #CALCULATING IDEAL IRRADIANCE/POWER
 
 def calculate_ideal_irradiances(altitude, I0=1361):
+    """
+    calculates ideal irradiances 
+    """
   
     IR = I0 * np.maximum(np.sin(altitude), 0)
 
@@ -192,6 +209,9 @@ def calculate_ideal_irradiances(altitude, I0=1361):
 
 
 def compute_daily_average_daily_values(times, values):
+    """
+    finds daily averages for hourly data, returns linear data 
+    """
 
     datetimes = times.to_datetime()
 
@@ -446,6 +466,9 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
     power_unit = all_data[power_key]["unit"]
 
     def graph_weather1(dates, irradiances, weather1):
+        """
+        graphing function for first graph
+        """
         ax[0].set_title(f"{variable_key1.capitalize()} vs. Irradiance")
 
         line1, = ax[0].plot(dates, irradiances, label = f"Irradiance ({irradiance_unit})", color = 'cyan')
@@ -465,6 +488,9 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
         ax[0].tick_params(axis='x', rotation=45)
 
     def graph_weather2(dates, irradiances, weather2):
+        """
+        graphing function for second graph
+        """
         ax[2].set_title(f"{variable_key2.capitalize()} vs. Irradiance")
 
         #print(irradiances)
@@ -487,6 +513,9 @@ def graph_datasets(year, month, irradiance_key, power_key, variable_key1, variab
     
 
     def graph_correlation(irradiance, weather, weather_key, weather_unit, axis_index):
+        """
+        function for graphing correlation
+        """
         ax[axis_index].scatter(weather, irradiance)
 
         coefficients= np.polyfit(weather, irradiance, 1)
@@ -786,4 +815,4 @@ if __name__ == '__main__':
 
     #dates, irradiance, power, rain_test, humidity_test, temperature_test = find_graphable_data(years[2], months[1], "real_irradiance", "power_output", "rain", "humidity", "temperatures")
 
-    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "temperatures", "humidity")
+    graph_datasets(years[2], months[1], "real_irradiance", "power_output", "temperatures", "humidity"
